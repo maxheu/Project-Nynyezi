@@ -6,6 +6,7 @@
 #'q' - Game Exit
 #
 
+#TestEdit
 import pygame
 import time
 import random
@@ -1477,10 +1478,14 @@ else:
                             self.techArrayTeam1 = data["data"]
                         #print("techArrayTeam1 wurde angepasst")
 
-                    elif data["action"] == "bistDuNochDa":
-                        pass
+                    elif data["action"] == "binNochDa": #bekommt Team1
+                        self.WasAngekommen = True
 
-                    #TAG
+                    elif data["action"] == "bistDuNochDa":  #bekommt Team2
+                        message = '{"action": "binNochDa", "data": "Filler"}'
+                        message = message.encode('utf-8')
+                        self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                        self.WasAngekommen = True
 
                     else:
                         print("_-_----------Data-Action nicht gefunden-------------------")
@@ -4320,6 +4325,54 @@ else:
                     HolderSurface.blit(ButtonhoverSurface, (0, 0))
                     self.gameDisplay.blit(HolderSurface, pos)
                     pygame.gfxdraw.polygon(self.gameDisplay, [(pos[0], pos[1]+10), (pos[0]+10, pos[1]), (pos[0]+190, pos[1]), (pos[0]+200, pos[1]+10), (pos[0]+200, pos[1]+y), (pos[0]+190, pos[1]+y+10), (pos[0]+10, pos[1]+y+10), (pos[0], pos[1]+y)], (255, 255, 255))
+
+            #ConnectionCheck und Abgleich der Daten
+
+            #Alle 5 sek Connection überprüfen und Daten checken
+
+            if "LastConnectionCheckTime" in locals():          #Wenn es nicht die erste GameLoop ist
+                if LastConnectionCheckTime <= time.time() - 5000:    #Wenn letzte Abfrage mehr als 5 sek zurückliegt
+                    LastConnectionCheckTime = time.time()
+                    if self.WasAngekommen:      #In den letzten 5 sek ist etwas vom Anderen Team angekommen
+                        self.ConnectionError = False
+                    else:
+                        if self.ConnectionError:
+                            self.gameExit = True    #Spiel wird beendet TODO: mit GewinnerScreen ersetzen
+                        else:
+                            self.ConnectionError = True
+                    #Senden Aller Pakete
+                    if self.yourTeam == "Team1":
+                        message = '{"action": "starArrayTeam1", "data": ' + self.starArrayTeam1 + '}'
+                        message = message.encode('utf-8')
+                        self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                        message = '{"action": "starArraySpecial", "data": ' + self.starArraySpecial + '}'
+                        message = message.encode('utf-8')
+                        self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                        message = '{"action": "OngoingAttacks", "data": ' + self.OngoingAttacks + '}'
+                        message = message.encode('utf-8')
+                        self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                        message = '{"action": "techArray", "data": ' + self.techArrayTeam1 + '}'
+                        message = message.encode('utf-8')
+                        self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                        message = '{"action": "bistDuNochDa", "data": "Filler"}'
+                        message = message.encode('utf-8')
+                        self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+
+                    elif self.yourTeam == "Team2":
+                        message = '{"action": "starArrayTeam2", "data": ' + self.starArrayTeam2 + '}'
+                        message = message.encode('utf-8')
+                        self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                        message = '{"action": "techArray", "data": ' + self.techArrayTeam2 + '}'
+                        message = message.encode('utf-8')
+                        self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                        message = '{"action": "binNochDa", "data": "Filler"}'
+                        message = message.encode('utf-8')
+                        self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+
+                    self.WasAngekommen = False
+            else:
+                LastConnectionCheckTime = time.time()
+
 
             pygame.display.update()
             self.dt = self.clock.tick(FPS) #Delay für FPS anzahl
