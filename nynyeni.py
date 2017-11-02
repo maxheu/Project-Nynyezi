@@ -4342,16 +4342,16 @@ else:
                             self.ConnectionError = True
                     #Senden Aller Pakete
                     if self.yourTeam == "Team1":
-                        message = '{"action": "starArrayTeam1", "data": ' + self.starArrayTeam1 + '}'
+                        message = '{"action": "starArrayTeam1", "data": ' + json.dumps(self.starArrayTeam1) + '}'
                         message = message.encode('utf-8')
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
-                        message = '{"action": "starArraySpecial", "data": ' + self.starArraySpecial + '}'
+                        message = '{"action": "starArraySpecial", "data": ' + json.dumps(self.starArraySpecial) + '}'
                         message = message.encode('utf-8')
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
-                        message = '{"action": "OngoingAttacks", "data": ' + self.OngoingAttacks + '}'
+                        message = '{"action": "OngoingAttacks", "data": ' + json.dumps(self.OngoingAttacks) + '}'
                         message = message.encode('utf-8')
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
-                        message = '{"action": "techArray", "data": ' + self.techArrayTeam1 + '}'
+                        message = '{"action": "techArray", "data": ' + json.dumps(self.techArrayTeam1) + '}'
                         message = message.encode('utf-8')
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
                         message = '{"action": "bistDuNochDa", "data": "Filler"}'
@@ -4359,10 +4359,13 @@ else:
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
 
                     elif self.yourTeam == "Team2":
-                        message = '{"action": "starArrayTeam2", "data": ' + self.starArrayTeam2 + '}'
+                        message = '{"action": "starArrayTeam2", "data": ' + json.dumps(self.starArrayTeam2) + '}'
                         message = message.encode('utf-8')
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
-                        message = '{"action": "techArray", "data": ' + self.techArrayTeam2 + '}'
+                        message = '{"action": "techArray", "data": ' + json.dumps(self.techArrayTeam2) + '}'
+                        message = message.encode('utf-8')
+                        self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                        message = '{"action": "OngoingAttacks", "data": ' + json.dumps(self.OngoingAttacks) + '}'
                         message = message.encode('utf-8')
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
                         message = '{"action": "binNochDa", "data": "Filler"}'
@@ -5638,11 +5641,11 @@ else:
                         self.playSFX("ZwischenstadiumErreicht", 1, 1.0)
                         star["nextLevel"] = 2 * mod/(star["mass"]+1)**0.5*60/0.1   #TimeFormel [für Suche]
                 elif star["cat"] == "Hauptreihe":
-                    if star["mass"] <= 0.3 or not techArray["Perfektion"][5]:
+                    if star["mass"] <= 0.3:
                         star["cat"] = "Zwerg"
                         self.playSFX("EndstadiumErreicht", 1, 1.0)
                         star["nextLevel"] = mod/(star["mass"]+1)**0.5*60/0.1   #TimeFormel [für Suche]
-                    else:
+                    elif techArray["Perfektion"][5]:
                         if techArray['Weisheit'][4]:
                             star['health']=star['health']*1.2
                         star["cat"] = "Riese"
@@ -5650,6 +5653,25 @@ else:
                             self.ersterRiese = star
                         self.playSFX("ZwischenstadiumErreicht", 1, 1.0)
                         star["nextLevel"] = mod/(star["mass"]+1)**0.5*60/0.1   #TimeFormel [für Suche]
+                    elif star["mass"] <= 3:
+                        star["cat"] = "Zwerg"
+                        self.playSFX("EndstadiumErreicht", 1, 1.0)
+                        star["nextLevel"] = mod/(star["mass"]+1)**0.5*60/0.1   #TimeFormel [für Suche]
+                    elif techArray["Kraft"][6] and not techArray["Weisheit"][6]:
+                        star['cat'] = "Schwarzes Loch"
+                        if not self.erstesSchwarzesLochflag:
+                            self.erstesSchwarzesLoch = star
+                    elif not techArray["Kraft"][6] and techArray["Weisheit"][6]:
+                        star["cat"] = "Neutronenstern"
+                        if not self.ersterNeutronensternflag:
+                            self.ersterNeutronenstern = star
+                    elif techArray["Kraft"][6] and techArray["Weisheit"][6]:
+                        self.drawEvent("chooseCat", star=star)
+                    else:
+                        star["cat"] = "Zwerg"
+                        self.playSFX("EndstadiumErreicht", 1, 1.0)
+                        star["nextLevel"] = mod/(star["mass"]+1)**0.5*60/0.1   #TimeFormel [für Suche]
+
                 elif star["cat"] == "Riese" or star["cat"] == "Hyperriese" or star["cat"] == "Überriese":
                     self.playSFX("EndstadiumErreicht", 1, 1.0)
                     star["nextLevel"] = mod/(star["mass"]+1)**0.5*60/0.1   #TimeFormel [für Suche]
