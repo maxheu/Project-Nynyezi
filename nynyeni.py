@@ -658,6 +658,7 @@ class Nynyezi:
         self.SFXVolumeSliderPos=55
         self.VolumeSliderSize=10
 
+        self.Attacks = []
 
         self.EventButtonSurfaces = []
         self.timer = [{"time": 60*30, "name": "gameend", "effect": "self.gameover = True", "ongoingeffect": " "}, {"time": 40, "name": "Crisis_Dark_Matter", "effect":
@@ -1486,6 +1487,40 @@ else:
                         message = message.encode('utf-8')
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
                         self.WasAngekommen = True
+
+                    #Attacks = [{"Angreifer": "test", "Verteidiger": "test2", "SchadenAng": 200, "SchadenVer": 10}, {...}]
+                    elif data["action"] == "Schaden":   #{"action": "Schaden", "data": {"schaden": -100, "stern": "test", "von": "test2"}}
+                        Schaden = data["data"]["schaden"]   #Positiver bereich -> Schaden, Negativer Bereich -> Heilen
+                        Stern = data["data"]["stern"]
+                        Von = data["data"]["von"]
+                        if self.yourTeam == "Team1":
+                            for star in self.starArrayTeam1:
+                                if star["name"] == Stern:
+                                    star["health"] -= Schaden
+                                    if Schaden > 0:
+                                        for angriff in self.Attacks:
+                                            if angriff["Angreifer"] == Stern and angriff["Verteidiger"] == Von:
+                                                angriff["SchadenVer"] = Schaden
+                                                break
+                                            elif angriff["Angreifer"] == Von and angriff["Verteidiger"] == Stern:
+                                                angriff["SchadenAng"] = Schaden
+                                                break
+                                    if star["health"] <= 0:
+                                        self.starCaptured(Stern, Von, "Gegner")
+                        elif self.yourTeam == "Team2":
+                            for star in self.starArrayTeam2:
+                                if star["name"] == Stern:
+                                    star["health"] -= Schaden
+                                    if Schaden > 0:
+                                        for angriff in self.Attacks:
+                                            if angriff["Angreifer"] == Stern and angriff["Verteidiger"] == Von:
+                                                angriff["SchadenVer"] = Schaden
+                                                break
+                                            elif angriff["Angreifer"] == Von and angriff["Verteidiger"] == Stern:
+                                                angriff["SchadenAng"] = Schaden
+                                                break
+                                    if star["health"] <= 0:
+                                        self.starCaptured(Stern, Von, "Gegner")
 
                     else:
                         print("_-_----------Data-Action nicht gefunden-------------------")
@@ -2531,6 +2566,290 @@ else:
                             star['health'] = starAt['health']
                         elif star['name'] == starDef['name']:
                             star['health'] = starDef['health']
+
+            if self.Attacks is not []:
+                for attack in self.Attacks:
+                    Angreifer = attack["Angreifer"]
+                    Verteidiger = attack["Verteidiger"]
+                    TeamAng = attack["TeamAng"]
+                    TeamVer = attack["TeamVer"]
+
+                    if TeamAng != self.yourTeam:    #Wenn du nicht der angreifende Stern bist
+                        if TeamAng == "Team1":      #Wenn der angreigende Stern aus Team1 ist
+                            for star in self.starArrayTeam1:
+                                if star["name"] == Angreifer:
+                                    Gegner = star
+                                    GegnerArray = "starArrayTeam1"
+                            for star in self.starArrayTeam2:
+                                if star["name"] == Verteidiger:
+                                    DeinStern = star
+                                    DeinArray = "starArrayTeam2"
+                        elif TeamAng == "Team2":     #Wenn deer angreifende Stern aus Team2 ist
+                            for star in self.starArrayTeam2:
+                                if star["name"] == Angreifer:
+                                    Gegner = star
+                                    GegnerArray = "starArrayTeam2"
+                            for star in self.starArrayTeam1:
+                                if star["name"] == Verteidiger:
+                                    DeinStern = star
+                                    DeinArray = "starArrayTeam1"
+                        elif TeamAng == "Team3":     #Der Stern ist einer durch Events entstandener Stern
+                            if self.yourTeam == "Team1":
+                                for star in self.starArrayHostileTeam1:
+                                    if star["name"] == Angreifer:
+                                        Gegner = star
+                                        GegnerArray = "starArrayHostileTeam1"
+                                for star in self.starArrayTeam1:
+                                    if star["name"] == Verteidiger:
+                                        DeinStern = star
+                                        DeinArray = "starArrayTeam1"
+                            elif self.yourTeam == "Team2":
+                                for star in self.starArrayHostileTeam2:
+                                    if star["name"] == Angreifer:
+                                        Gegner = star
+                                        GegnerArray = "starArrayHostileTeam2"
+                                for star in self.starArrayTeam2:
+                                    if star["name"] == Verteidiger:
+                                        DeinStern = star
+                                        DeinArray = "starArrayTeam2"
+
+                    elif TeamDef != self.yourTeam:
+                        if TeamDef == "Team1":      #Wenn der angreigende Stern aus Team1 ist
+                            for star in self.starArrayTeam1:
+                                if star["name"] == Verteidiger:
+                                    Gegner = star
+                                    GegnerArray = "starArrayTeam1"
+                            for star in self.starArrayTeam2:
+                                if star["name"] == Angreifer:
+                                    DeinStern = star
+                                    DeinArray = "starArrayTeam2"
+                        elif TeamDef == "Team2":     #Wenn deer angreifende Stern aus Team2 ist
+                            for star in self.starArrayTeam2:
+                                if star["name"] == Verteidiger:
+                                    Gegner = star
+                                    GegnerArray = "starArrayTeam2"
+                            for star in self.starArrayTeam1:
+                                if star["name"] == Angreifer:
+                                    DeinStern = star
+                                    DeinArray = "starArrayTeam1"
+                        elif TeamDef == "Team3":     #Der Stern ist einer durch Events entstandener Stern
+                            if self.yourTeam == "Team1":
+                                for star in self.starArrayHostileTeam1:
+                                    if star["name"] == Verteidiger:
+                                        Gegner = star
+                                        GegnerArray = "starArrayHostileTeam1"
+                                for star in self.starArrayTeam1:
+                                    if star["name"] == Angreifer:
+                                        DeinStern = star
+                                        DeinArray = "starArrayTeam1"
+                            elif self.yourTeam == "Team2":
+                                for star in self.starArrayHostileTeam2:
+                                    if star["name"] == Verteidiger:
+                                        Gegner = star
+                                        GegnerArray = "starArrayHostileTeam2"
+                                for star in self.starArrayTeam2:
+                                    if star["name"] == Angreifer:
+                                        DeinStern = star
+                                        DeinArray = "starArrayTeam2"
+
+                    DeinSchaden = 100*2**(-DeinStern["mass"]/20)
+                    distance = ((abs(DeinStern["cord_x"] - Gegner["cord_x"]))** 2 + (abs(DeinStern["cord_y"] - Gegner["cord_y"]))** 2 )**0.5
+
+                    rangeAt, rangeDef, attackAt, attackDef, defenseAt, defenseDef, stackingAt, modAt, modDef = 1
+
+                    for value in self.OngoingAttacksMods:
+                        if value["star"] == Angreifer:
+                            timemod = value["time"]
+                            break
+
+                    if self.yourTeam == "Team1":
+                        DeinTechBaum = self.techArrayTeam1
+                        GegnerTechBaum = self.techArrayTeam2
+                    elif self.yourTeam == "Team2":
+                        DeinTechBaum = self.techArrayTeam2
+                        GegnerTechBaum = self.techArrayTeam1
+
+                    attackAt = attackAt * self.attackmod
+
+                    if self.yourTeam == TeamAng:
+                        if DeinStern['cat'] == 'Geburt':
+                            modAt = 1
+                        elif DeinStern['cat'] == 'Hauptreihe':
+                            modAt = 1
+                        elif DeinStern['cat'] == 'Riese' or DeinStern['cat'] == 'Hyperriese' or DeinStern['cat'] == 'Überriese':
+                            modAt = 0.7
+                        elif DeinStern['cat'] == 'Zwerg':
+                            if DeinTechBaum['Weisheit'][7]:
+                                modAt = 2.0
+                            else:
+                                modAt = 1.7
+                        elif DeinStern['cat'] == 'Neutronenstern':
+                            modAt = 2.5
+                        elif DeinStern['cat'] == 'Schwarzes Loch':
+                            modAt = 3
+                        elif starAt['cat'] == 'Weißes Loch':
+                            modAt = 4
+
+                        if DeinTechBaum["Kraft"][1] == True:    #
+                            rangeAt = rangeAt * 0.85
+                        if DeinTechBaum['Weisheit'][3]:         #
+                            rangeAt = rangeAt * 1.3
+                        if DeinTechBaum["Kraft"][8] == True:    #
+                            attackAt = attackAt * 1.1
+                        if GegnerTechBaum["Kraft"][3] == True:  #
+                            defenseDef = defenseDef * 0.85
+                        if DeinTechBaum["Kraft"][6] == True:    #
+                            stackingAt = stackingAt * 0.75
+                        if DeinTechBaum["Kraft"][3] == True:    #
+                            timepenaltyAt = (3-timemod)/3
+                        else:
+                            timepenaltyAt = (5-timemod)/5
+
+                        stackingpenalty = 3/2**stackingAt    #Stackingpenalty für einen einzelnen angreifenden Stern muss 1 sein
+
+                        for Angriff in self.Attacks:
+                            if Angriff["Verteidiger"] == Verteidiger:
+                                if Angriff["Angreifer"] != Angreifer:     #Solange es nicht um genau das Battle geht
+                                    stackingpenalty = stackingpenalty * (2/3)**stackingAt
+                        DeinSchaden = DeinSchaden * modAt * attackAt * defenseDef * 3**(-distance*rangeAt/display_x) *timepanaltyAt * stackingpenalty * (1/FPS) * 0.1
+
+                        if TeamVer == "Team3":
+                            modDef = 2.5
+
+                            if DeinTechBaum["Kraft"][8] == True:
+                                attackDef = attackDef * 1.1
+                            if DeinTechBaum["Kraft"][3] == True:
+                                defenseAt = defenseAt * 0.85
+                            if DeinTechBaum["Kraft"][2] == True:
+                                rangeDef = rangeDef * 0.85
+                            if DeinTechBaum['Weisheit'][2]:
+                                rangeDef = rangeDef * 1.3
+                            if DeinTechBaum["Kraft"][3] == True:
+                                timepenaltyDef = (3-timemod)/3
+                            else:
+                                timepenaltyDef = (5-timemod)/5
+
+                            GegnerSchaden = GegnerSchaden * modDef * attackDef * defenseAt * 3**(-distance*rangeDef/display_x) * timepenaltyDef * (1/FPS) * 0.1
+                            attack["SchadenVer"] = GegnerSchaden
+                        else:
+                            message = '{"action": "Schaden", "data": ["schaden": ' + DeinSchaden + ', "stern": ' + Gegner["name"] + ', "von": ' + DeinStern["name"] + ']}'
+                            message = message.encode('utf-8')
+                            self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                        attack["SchadenAng"] = DeinSchaden
+                        DeinEndPoint = DeinStern["health"]/attack["SchadenVer"]
+                        GegnerEndPoint = Gegner["health"]/DeinSchaden
+                        DeineFightPoints = DeinSchaden * DeinStern["health"]
+                        GegnerFightPoints = attack["SchadenVer"] * Gegner["health"]
+                        if self.yourTeam == "Team1":
+                            DeineFarbe = team1_color
+                            if TeamVer == "Team2":
+                                GegnerFarbe = team2_color
+                            elif TeamVer == "Team3":
+                                GegnerFarbe = hostileteam1_color
+                        elif self.yourTeam == "Team2":
+                            DeineFarbe = team2_color
+                            if TeamVer == "Team1":
+                                GegnerFarbe = team1_color
+                            elif TeamVer == "Team3":
+                                GegnerFarbe = hostileteam2_color
+
+                    elif self.yourTeam == TeamVer:
+                        if DeinStern['cat'] == 'Geburt':
+                            modDef = 1
+                        elif DeinStern['cat'] == 'Hauptreihe':
+                            modDef = 1
+                        elif DeinStern['cat'] == 'Riese' or DeinStern['cat'] == 'Hyperriese' or DeinStern['cat'] == 'Überriese':
+                            modDef = 0.7
+                        elif DeinStern['cat'] == 'Zwerg':
+                            if DeinTechBaum['Weisheit'][7]:
+                                modDef = 1.7
+                            else:
+                                modDef = 2.0
+                        elif DeinStern['cat'] == 'Neutronenstern':
+                            modDef = 2.5
+                        elif DeinStern['cat'] == 'Schwarzes Loch':
+                            modDef = 3
+                        elif DeinStern['cat'] == 'Weißes Loch':
+                            modDef = 2.5
+
+                        if DeinTechBaum["Kraft"][8] == True:
+                            attackDef = attackDef * 1.1
+                        if GegnerTechBaum["Kraft"][3] == True:
+                            defenseAt = defenseAt * 0.85
+                        if DeinTechBaum["Kraft"][2] == True:
+                            rangeDef = rangeDef * 0.85
+                        if DeinTechBaum['Weisheit'][2]:
+                            rangeDef = rangeDef * 1.3
+                        if DeinTechBaum["Kraft"][3] == True:
+                            timepenaltyDef = (3-timemod)/3
+                        else:
+                            timepenaltyDef = (5-timemod)/5
+
+                        DeinSchaden = DeinSchaden * modDef * attackDef * defenseAt * 3**(-distance*rangeDef/display_x) * timepenaltyDef * (1/FPS) * 0.1
+                        if TeamAng == "Team3":
+                            modAt = 4
+
+                            if DeinTechBaum["Kraft"][1] == True:    #
+                                rangeAt = rangeAt * 0.85
+                            if DeinTechBaum['Weisheit'][3]:         #
+                                rangeAt = rangeAt * 1.3
+                            if DeinTechBaum["Kraft"][8] == True:    #
+                                attackAt = attackAt * 1.1
+                            if DeinTechBaum["Kraft"][3] == True:  #
+                                defenseDef = defenseDef * 0.85
+                            if DeinTechBaum["Kraft"][6] == True:    #
+                                stackingAt = stackingAt * 0.75
+                            if DeinTechBaum["Kraft"][3] == True:    #
+                                timepenaltyAt = (3-timemod)/3
+                            else:
+                                timepenaltyAt = (5-timemod)/5
+
+                            stackingpenalty = 3/2**stackingAt    #Stackingpenalty für einen einzelnen angreifenden Stern muss 1 sein
+
+                            for Angriff in self.Attacks:
+                                if Angriff["Verteidiger"] == Verteidiger:
+                                    if Angriff["Angreifer"] != Angreifer:     #Solange es nicht um genau das Battle geht
+                                        stackingpenalty = stackingpenalty * (2/3)**stackingAt
+                            GegnerSchaden = DeinSchaden * modAt * attackAt * defenseDef * 3**(-distance*rangeAt/display_x) *timepanaltyAt * stackingpenalty * (1/FPS) * 0.1
+                            attack["SchadenAng"] = GegnerSchaden
+                        else:
+                            message = '{"action": "Schaden", "data": ["schaden": ' + DeinSchaden + ', "stern": ' + Gegner["name"] + ', "von": ' + DeinStern["name"] + ']}'
+                            message = message.encode('utf-8')
+                            self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                        attack["SchadenVer"] = DeinSchaden
+                        DeinEndPoint = DeinStern["health"]/attack["SchadenAng"]
+                        GegnerEndPoint = Gegner["health"]/DeinSchaden
+                        DeineFightPoints = DeinSchaden * DeinStern["health"]
+                        GegnerFightPoints = attack["SchadenAng"] * Gegner["health"]
+                        if self.yourTeam == "Team1":
+                            DeineFarbe = team1_color
+                            if TeamAng == "Team2":
+                                GegnerFarbe = team2_color
+                            elif TeamAng == "Team3":
+                                GegnerFarbe = hostileteam1_color
+                        elif self.yourTeam == "Team2":
+                            DeineFarbe = team2_color
+                            if TeamAng == "Team1":
+                                GegnerFarbe = team1_color
+                            elif TeamAng == "Team3":
+                                GegnerFarbe = hostileteam2_color
+
+                    Verhaltniss = (DeineFightPoints)/(DeineFightPoints + GegnerFightPoints)  # Einfach Prozent ausrechnen :)
+
+                    point = (int(DeinStern["cord_x"] + (Gegner["cord_x"] - DeinStern["cord_x"]) * Verhaltniss), int(DeinStern["cord_y"] + (Gegner["cord_y"] - DeinStern["cord_y"]) * Verhaltniss))
+
+                    if self.TechOpen == False:
+                        pygame.draw.line(self.gameDisplay, DeineFarbe, (DeinStern["cord_x"], DeinStern["cord_y"]), point, 1)
+                        pygame.draw.line(self.gameDisplay, GegnerFarbe, (Gegner["cord_x"], Gegner["cord_y"]), point, 1)
+                        pygame.draw.circle(self.gameDisplay, colorLaser, point, round(8*(1-timemod/5)))
+
+
+                    for star in self.starArrayTeam1:
+                        if star['name'] == DeinStern['name']:
+                            star['health'] = DeinStern['health']
+                    for star in self.starArrayTeam2:
+                        if star['name'] == DeinStern['name']:
+                            star['health'] = DeinStern['health']
 
                 #InfoBoxEdit von Max
             if self.infoBoxOpen == True and self.TechOpen == False:
