@@ -644,7 +644,7 @@ class Nynyezi:
         self.NewStarBuild = False
         self.nameEingeben = 0
         self.nameFlag = 0
-        self.nameString = ""
+        self.nameString = " "
         self.NewStarCost = 0
         self.NewStarSizeCord = 175
         self.NewStarSlide = False
@@ -1462,11 +1462,11 @@ else:
                     #print(data)
                     if data["action"] == "starArrayTeam1":
                         self.starArrayTeam1 = data["data"]
-                        #print("starArrayTeam1 wurde angepasst")
+                        print("starArrayTeam1 wurde angepasst")
 
                     elif data["action"] == "starArrayTeam2":
                         self.starArrayTeam2 = data["data"]
-                        #print("starArrayTeam2 wurde angepasst")
+                        print("starArrayTeam2 wurde angepasst")
 
                     elif data["action"] == "starArraySpecial":
                         self.starArraySpecial = data["data"]
@@ -1478,7 +1478,6 @@ else:
 
                     elif data["action"] == "OngoingAttacksMods":
                         self.OngoingAttacksMods = data["data"]
-                        print("OngoingAttacksMods wurde angepasst")
 
                     elif data["action"] == "techArray":
                         if self.yourTeam == "Team1":
@@ -1699,10 +1698,10 @@ else:
             for star in self.starArrayHostileTeam2:
                 if not star['inAttack']:
                     beststar = []
-                    bestdist = 0
+                    bestdist = 1000000
                     for choosestar in self.starArrayTeam2:
                         if (abs(star['cord_x']-choosestar['cord_x'])**2+abs(star['cord_y']-choosestar['cord_y'])**2)**0.5<bestdist:
-                            beststar = star
+                            beststar = choosestar
                             bestdist = (abs(star['cord_x']-choosestar['cord_x'])**2+abs(star['cord_y']-choosestar['cord_y'])**2)**0.5
                     self.starAttack(beststar, star)
 
@@ -2382,7 +2381,7 @@ else:
                             battle["starDef"] = star
 
                     if battle["starAt"]["team"]==battle["starDef"]["team"]:
-                        self.OngoingAttacks.remove(battle)
+                        self.Attacks.remove(battle)
                         battle["starAt"]["inAttack"] = False
                         battle["starDef"]["inAttack"] = False
                         for value in self.OngoingAttacksMods:
@@ -2487,7 +2486,7 @@ else:
                     if starDefTech["Kraft"][8] == True:
                         attackDef = attackDef * 1.1
                     if starDefTech["Kraft"][3] == True:
-                        timepenaltyDef = (3-timemod)/3
+                        timepenaltyDef = 1
                     else:
                         timepenaltyDef = (5-timemod)/5
 
@@ -2609,6 +2608,7 @@ else:
                                     DeinStern = star
                                     DeinArray = "starArrayTeam1"
                         elif TeamAng == "Team3":     #Der Stern ist einer durch Events entstandener Stern
+<<<<<<< HEAD
                             if TeamVer == "Team1":
                                 for star in self.starArrayHostileTeam1:
                                     print("Star in self.starArrayHostileTeam1: ", star)
@@ -2628,6 +2628,25 @@ else:
                                     if star["name"] == Verteidiger:
                                         DeinStern = star
                                         DeinArray = "starArrayTeam2"
+=======
+                            for star in self.starArrayHostileTeam1:
+                                if star["name"] == Angreifer:
+                                    Gegner = star
+                                    GegnerArray = "starArrayHostileTeam1"
+                            for star in self.starArrayTeam1:
+                                if star["name"] == Verteidiger:
+                                    DeinStern = star
+                                    DeinArray = "starArrayTeam1"
+                        elif TeamAng == "Team4":     #Der Stern ist einer durch Events entstandener Stern
+                            for star in self.starArrayHostileTeam2:
+                                if star["name"] == Angreifer:
+                                    Gegner = star
+                                    GegnerArray = "starArrayHostileTeam2"
+                            for star in self.starArrayTeam1:
+                                if star["name"] == Verteidiger:
+                                    DeinStern = star
+                                    DeinArray = "starArrayTeam2"
+>>>>>>> 6c4514ecf2ef706052effad9a3986d09aabc5ae2
 
                     elif TeamVer != self.yourTeam:
                         if TeamVer == "Team1":      #Wenn der angreigende Stern aus Team1 ist
@@ -2649,6 +2668,7 @@ else:
                                     DeinStern = star
                                     DeinArray = "starArrayTeam1"
                         elif TeamVer == "Team3":     #Der Stern ist einer durch Events entstandener Stern
+<<<<<<< HEAD
                             if TeamAng == "Team1":
                                 for star in self.starArrayHostileTeam1:
                                     if star["name"] == Verteidiger:
@@ -2667,6 +2687,29 @@ else:
                                     if star["name"] == Angreifer:
                                         DeinStern = star
                                         DeinArray = "starArrayTeam2"
+=======
+                            for star in self.starArrayHostileTeam1:
+                                if star["name"] == Verteidiger:
+                                    Gegner = star
+                                    GegnerArray = "starArrayHostileTeam1"
+                            for star in self.starArrayTeam1:
+                                if star["name"] == Angreifer:
+                                    DeinStern = star
+                                    DeinArray = "starArrayTeam1"
+                        elif TeamVer == "Team4":     #Der Stern ist einer durch Events entstandener Stern
+                            for star in self.starArrayHostileTeam2:
+                                if star["name"] == Verteidiger:
+                                    Gegner = star
+                                    GegnerArray = "starArrayHostileTeam2"
+                            for star in self.starArrayTeam2:
+                                if star["name"] == Angreifer:
+                                    DeinStern = star
+                                    DeinArray = "starArrayTeam2"
+
+                    elif TeamAng == TeamVer:
+                        self.Attacks.remove(attack)
+                        continue
+>>>>>>> 6c4514ecf2ef706052effad9a3986d09aabc5ae2
 
                     DeinSchaden = 100*2**(-DeinStern["mass"]/20)
                     distance = ((abs(DeinStern["cord_x"] - Gegner["cord_x"]))** 2 + (abs(DeinStern["cord_y"] - Gegner["cord_y"]))** 2 )**0.5
@@ -2717,7 +2760,7 @@ else:
                         if DeinTechBaum["Kraft"][6] == True:    #
                             stackingAt = stackingAt * 0.75
                         if DeinTechBaum["Kraft"][3] == True:    #
-                            timepenaltyAt = (3-timemod)/3
+                            timepenaltyAt = 1
                         else:
                             timepenaltyAt = (5-timemod)/5
 
@@ -2727,10 +2770,29 @@ else:
                             if Angriff["Verteidiger"] == Verteidiger:
                                 if Angriff["Angreifer"] != Angreifer:     #Solange es nicht um genau das Battle geht
                                     stackingpenalty = stackingpenalty * (2/3)**stackingAt
+                                else:
+                                    break
+                        print(stackingpenalty)
                         DeinSchaden = DeinSchaden * modAt * attackAt * defenseDef * 3**(-distance*rangeAt/display_x) *timepenaltyAt * stackingpenalty * (1/FPS) * 0.1
 
                         if TeamVer == "Team3":
-                            modDef = 2.5
+                            if DeinStern['cat'] == 'Geburt':
+                                modDef = 1
+                            elif DeinStern['cat'] == 'Hauptreihe':
+                                modDef = 1
+                            elif DeinStern['cat'] == 'Riese' or DeinStern['cat'] == 'Hyperriese' or DeinStern['cat'] == 'Überriese':
+                                modDef = 0.7
+                            elif DeinStern['cat'] == 'Zwerg':
+                                if DeinTechBaum['Weisheit'][7]:
+                                    modDef = 2.0
+                                else:
+                                    modDef = 1.7
+                            elif DeinStern['cat'] == 'Neutronenstern':
+                                modDef = 2.5
+                            elif DeinStern['cat'] == 'Schwarzes Loch':
+                                modDef = 3
+                            elif starAt['cat'] == 'Weißes Loch':
+                                modDef = 2.5
 
                             if DeinTechBaum["Kraft"][8] == True:
                                 attackDef = attackDef * 1.1
@@ -2741,7 +2803,7 @@ else:
                             if DeinTechBaum['Weisheit'][2]:
                                 rangeDef = rangeDef * 1.3
                             if DeinTechBaum["Kraft"][3] == True:
-                                timepenaltyDef = (3-timemod)/3
+                                timepenaltyDef = 1
                             else:
                                 timepenaltyDef = (5-timemod)/5
 
@@ -2933,9 +2995,15 @@ else:
                             elif TeamAng == "Team3":
                                 GegnerFarbe = hostileteam2_color
 
+<<<<<<< HEAD
                     if DeineFightPoints + GegnerFightPoints != 0:
                         Verhaltniss = (DeineFightPoints)/(DeineFightPoints + GegnerFightPoints)  # Einfach Prozent ausrechnen :)
                     else:
+=======
+                    try:
+                        Verhaltniss = (DeineFightPoints)/(DeineFightPoints + GegnerFightPoints)  # Einfach Prozent ausrechnen :)
+                    except:
+>>>>>>> 6c4514ecf2ef706052effad9a3986d09aabc5ae2
                         Verhaltniss = 1
 
                     point = (int(DeinStern["cord_x"] + (Gegner["cord_x"] - DeinStern["cord_x"]) * Verhaltniss), int(DeinStern["cord_y"] + (Gegner["cord_y"] - DeinStern["cord_y"]) * Verhaltniss))
@@ -4168,10 +4236,11 @@ else:
 
                                         v = '{"action": "starArrayTeam1", "data": ' + json.dumps(self.starArrayTeam1) + '}'
                                         v = v.encode('utf-8')
+
                                         #debugMode
                                         self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
                                         self.nameEingeben = 0
-                                        self.nameString = ""
+                                        self.nameString = " "
 
                                     elif self.yourTeam == "Team2":
                                         self.strahlungTeam2 = self.strahlungTeam2 - self.NewStarCost
@@ -4204,7 +4273,7 @@ else:
                                         #DebugMode
                                         self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
                                         self.nameEingeben = 0
-                                        self.nameString = ""
+                                        self.nameString = " "
 
                                 else:
                                     x = True
@@ -4661,7 +4730,6 @@ else:
                                     elif self.TechInfoString == "KraftVI":
                                         if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftVICost and techArray["Kraft"][5] == False:
                                             self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * self.Krafttechmod * KraftVICost
-                                            techArray["Kraft"][5] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
                                     elif self.TechInfoString == "KraftVII":
@@ -4704,6 +4772,20 @@ else:
                                         if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitVCost and techArray["Weisheit"][4] == False:
                                             self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitVCost
                                             techArray["Weisheit"][4] = True
+                                            if self.yourTeam == "Team1":
+                                                for star in self.starArrayTeam1:
+                                                    if star["cat"] == "Riese" or star["cat"] == "Hyperriese" or star["cat"] == "Überriese":
+                                                        star["health"]= star["health"]*8/5
+                                                message = '{"action": "starArrayTeam1", "data": ' + json.dumps(self.starArrayTeam1) + '}'
+                                                message = message.encode('utf-8')
+                                                self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                                            if self.yourTeam == "Team2":
+                                                for star in self.starArrayTeam2:
+                                                    if star["cat"] == "Riese" or star["cat"] == "Hyperriese" or star["cat"] == "Überriese":
+                                                        star["health"]= star["health"]*8/5
+                                                message = '{"action": "starArrayTeam2", "data": ' + json.dumps(self.starArrayTeam2) + '}'
+                                                message = message.encode('utf-8')
+                                                self.s.sendto(message, (self.gegnerHost, self.gegnerPort))                                            
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitVI":
@@ -6177,9 +6259,7 @@ else:
 
                 if star["mass"] <= 2.3 and star["mass"] < 3 and not choosecat["state"]:
                     metalle += mod * 400*(star["mass"]-2.3)/0.7+200
-                    print("kleiner Stern gibt Masse")
                 elif star["mass"] > 3 and not choosecat["state"]:
-                    print("großer stern gibt Masse", star['name'], choosecat['state'])
                     metalle += mod * 400*(star["mass"]-3)/17+600
 
         if Changestar["team"] == 1:
@@ -6212,6 +6292,7 @@ else:
 
 
     def starCaptured(self, DeinStern, Gegner, starWon):
+<<<<<<< HEAD
         print("Attacks: ", self.Attacks)
         print("DeinStern: ", DeinStern)
         print("Gegner: ", Gegner)
@@ -6242,6 +6323,23 @@ else:
             print("------------------")
         print("Nochmal Attacks: ", self.Attacks)
 
+=======
+        print(DeinStern, Gegner, starWon)
+        for attack in self.Attacks:
+            print(attack, DeinStern, Gegner)
+            if attack["Angreifer"] == Gegner:
+                GegnerTeam = attack["TeamAng"]
+                self.Attacks.remove(attack)
+                continue
+            elif attack["Angreifer"] == DeinStern:
+                GegnerTeam = attack["TeamVer"]
+                print(GegnerTeam, "ich bin angreifer")
+                self.Attacks.remove(attack)
+                continue
+        for attack in self.Attacks:
+            if attack["Verteidiger"] == Gegner or attack["Verteidiger"] == DeinStern:
+                self.Attacks.remove(attack)
+>>>>>>> 6c4514ecf2ef706052effad9a3986d09aabc5ae2
         for value in self.OngoingAttacksMods:
             if value["star"] == DeinStern or value["star"] == Gegner:
                 self.OngoingAttacksMods.remove(value)
@@ -6251,7 +6349,6 @@ else:
                 self.infoBoxTeam = self.yourTeam
             if self.yourTeam == "Team1":
                 self.playSFX("BattleWon", 1, 1)
-                self.playSFX("BattleLost", 2, 1)
                 if GegnerTeam == "Team2":
                     for star in self.starArrayTeam2:
                         if star["name"] == Gegner:
@@ -6741,7 +6838,7 @@ else:
             else:
                 pygame.draw.polygon(self.gameDisplay, team1_color, [(x, y-11), (x+8, y-8), (x+8, y-4), (x, y-7), (x-8, y-4), (x-8, y-8)])
             mod = 1.0
-            if self.techArrayTeam1["Kraft"][4]:
+            if self.techArrayTeam1["Weisheit"][4] and (star["cat"]=="Riese" or star["cat"]=="Hyperriese" or star["cat"] == "Überriese"):
                 mod = 8/5
             hight = 25
             rat5offset = 0
@@ -6780,7 +6877,11 @@ else:
             else:
                 pygame.draw.polygon(self.gameDisplay, team2_color, [(x, y-11), (x+8, y-8), (x+8, y-4), (x, y-7), (x-8, y-4), (x-8, y-8)])
             mod = 1.0
+<<<<<<< HEAD
             if self.techArrayTeam2["Kraft"][4]:
+=======
+            if self.techArrayTeam2["Weisheit"][4] and (star["cat"]=="Riese" or star["cat"]=="Hyperriese" or star["cat"] == "Überriese"):
+>>>>>>> 6c4514ecf2ef706052effad9a3986d09aabc5ae2
                 mod = 8/5
             hight = 25
             rat5offset = 0
@@ -6833,6 +6934,42 @@ else:
             pygame.draw.polygon(self.gameDisplay, blue, [(x+12+rat5offset, y-hight), (x+rat5offset+18, y-hight), (x+rat5offset+18, y), (x+rat5offset+12, y)])
             pygame.draw.polygon(self.gameDisplay, hostileteam1_color, [(x+rat5offset+12, round(y-hight*(healthproz))), (x+rat5offset+18, round(y-hight*(healthproz))),  (x+rat5offset+18, y), (x+rat5offset+12, y)])
 
+        for star in self.starArrayHostileTeam2:
+            loccolor = hostileteam2_color
+            offset = round((star_size_choose - star_size)/2+1)
+            if self.chooseAttackStar and self.yourTeam == "Team2":
+                offset = offset * 2
+            rating = round(math.log(star['mass']/0.1)/math.log(2.96))
+            x = star["cord_x"]
+            y = star["cord_y"]-offset
+            if rating == 5:
+                self.gameDisplay.blit(self.Sternabzeichen, (x-20, y-45))
+            elif rating ==4:
+                pygame.draw.polygon(self.gameDisplay, hostileteam1_color, [(x, y-11), (x+8, y-8), (x+8, y-4), (x, y-7), (x-8, y-4), (x-8, y-8)])
+                pygame.draw.polygon(self.gameDisplay, hostileteam1_color, [(x, y-11-6), (x+8, y-8-6), (x+8, y-4-6), (x, y-7-6), (x-8, y-4-6), (x-8, y-8-6)])
+                pygame.draw.polygon(self.gameDisplay, hostileteam1_color, [(x, y-11-12), (x+8, y-8-12), (x+8, y-4-12), (x, y-7-12), (x-8, y-4-12), (x-8, y-8-12)])
+                pygame.draw.polygon(self.gameDisplay, hostileteam1_color, [(x, y-11-18), (x+8, y-8-18), (x+8, y-4-18), (x, y-7-18), (x-8, y-4-18), (x-8, y-8-18)])
+            elif rating == 3:
+                pygame.draw.polygon(self.gameDisplay, hostileteam1_color, [(x, y-11), (x+8, y-8), (x+8, y-4), (x, y-7), (x-8, y-4), (x-8, y-8)])
+                pygame.draw.polygon(self.gameDisplay, hostileteam1_color, [(x, y-11-6), (x+8, y-8-6), (x+8, y-4-6), (x, y-7-6), (x-8, y-4-6), (x-8, y-8-6)])
+                pygame.draw.polygon(self.gameDisplay, hostileteam1_color, [(x, y-11-12), (x+8, y-8-12), (x+8, y-4-12), (x, y-7-12), (x-8, y-4-12), (x-8, y-8-12)])
+            elif rating == 2:
+                pygame.draw.polygon(self.gameDisplay, hostileteam1_color, [(x, y-11), (x+8, y-8), (x+8, y-4), (x, y-7), (x-8, y-4), (x-8, y-8)])
+                pygame.draw.polygon(self.gameDisplay, hostileteam1_color, [(x, y-11-6), (x+8, y-8-6), (x+8, y-4-6), (x, y-7-6), (x-8, y-4-6), (x-8, y-8-6)])
+            else:
+                pygame.draw.polygon(self.gameDisplay, hostileteam1_color, [(x, y-11), (x+8, y-8), (x+8, y-4), (x, y-7), (x-8, y-4), (x-8, y-8)])
+            hight = 25
+            rat5offset = 0
+            if rating == 5:
+                rat5offset = 4
+                hight += 6
+            healthproz = star['health']/(300 * star["mass"] )
+            if healthproz == 1.0:
+                continue
+            y = y + offset
+            x= x+offset
+            pygame.draw.polygon(self.gameDisplay, blue, [(x+12+rat5offset, y-hight), (x+rat5offset+18, y-hight), (x+rat5offset+18, y), (x+rat5offset+12, y)])
+            pygame.draw.polygon(self.gameDisplay, hostileteam2_color, [(x+rat5offset+12, round(y-hight*(healthproz))), (x+rat5offset+18, round(y-hight*(healthproz))),  (x+rat5offset+18, y), (x+rat5offset+12, y)])
 
     def Crisis_Dark_Matter_Create(self):
         if self.yourTeam == "Team1":
