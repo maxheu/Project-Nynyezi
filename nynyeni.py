@@ -1449,6 +1449,8 @@ else:
                 #print("Raw Data: ----------------")
                 #print(data)
                 if data != "SpielStart1" and data != "SpielStart2":
+                    #print("Raw-Data: ----------------------")
+                    #print(data)
                     data = json.loads(data)
                     #print("Data: -----------------")
                     #print(data)
@@ -1487,6 +1489,9 @@ else:
                         message = message.encode('utf-8')
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
                         self.WasAngekommen = True
+
+                    elif data["action"] == "NewAttack":
+                        self.Attacks.append(data["data"])
 
                     #Attacks = [{"Angreifer": "test", "Verteidiger": "test2", "SchadenAng": 200, "SchadenVer": 10}, {...}]
                     elif data["action"] == "Schaden":   #{"action": "Schaden", "data": {"schaden": -100, "stern": "test", "von": "test2"}}
@@ -2613,8 +2618,8 @@ else:
                                         DeinStern = star
                                         DeinArray = "starArrayTeam2"
 
-                    elif TeamDef != self.yourTeam:
-                        if TeamDef == "Team1":      #Wenn der angreigende Stern aus Team1 ist
+                    elif TeamVer != self.yourTeam:
+                        if TeamVer == "Team1":      #Wenn der angreigende Stern aus Team1 ist
                             for star in self.starArrayTeam1:
                                 if star["name"] == Verteidiger:
                                     Gegner = star
@@ -2623,7 +2628,7 @@ else:
                                 if star["name"] == Angreifer:
                                     DeinStern = star
                                     DeinArray = "starArrayTeam2"
-                        elif TeamDef == "Team2":     #Wenn deer angreifende Stern aus Team2 ist
+                        elif TeamVer == "Team2":     #Wenn deer angreifende Stern aus Team2 ist
                             for star in self.starArrayTeam2:
                                 if star["name"] == Verteidiger:
                                     Gegner = star
@@ -2632,7 +2637,7 @@ else:
                                 if star["name"] == Angreifer:
                                     DeinStern = star
                                     DeinArray = "starArrayTeam1"
-                        elif TeamDef == "Team3":     #Der Stern ist einer durch Events entstandener Stern
+                        elif TeamVer == "Team3":     #Der Stern ist einer durch Events entstandener Stern
                             if self.yourTeam == "Team1":
                                 for star in self.starArrayHostileTeam1:
                                     if star["name"] == Verteidiger:
@@ -2655,7 +2660,7 @@ else:
                     DeinSchaden = 100*2**(-DeinStern["mass"]/20)
                     distance = ((abs(DeinStern["cord_x"] - Gegner["cord_x"]))** 2 + (abs(DeinStern["cord_y"] - Gegner["cord_y"]))** 2 )**0.5
 
-                    rangeAt, rangeDef, attackAt, attackDef, defenseAt, defenseDef, stackingAt, modAt, modDef = 1
+                    rangeAt, rangeDef, attackAt, attackDef, defenseAt, defenseDef, stackingAt, modAt, modDef = 1, 1, 1, 1, 1, 1, 1, 1, 1
 
                     for value in self.OngoingAttacksMods:
                         if value["star"] == Angreifer:
@@ -2711,7 +2716,7 @@ else:
                             if Angriff["Verteidiger"] == Verteidiger:
                                 if Angriff["Angreifer"] != Angreifer:     #Solange es nicht um genau das Battle geht
                                     stackingpenalty = stackingpenalty * (2/3)**stackingAt
-                        DeinSchaden = DeinSchaden * modAt * attackAt * defenseDef * 3**(-distance*rangeAt/display_x) *timepanaltyAt * stackingpenalty * (1/FPS) * 0.1
+                        DeinSchaden = DeinSchaden * modAt * attackAt * defenseDef * 3**(-distance*rangeAt/display_x) *timepenaltyAt * stackingpenalty * (1/FPS) * 0.1
 
                         if TeamVer == "Team3":
                             modDef = 2.5
@@ -2731,13 +2736,55 @@ else:
 
                             GegnerSchaden = GegnerSchaden * modDef * attackDef * defenseAt * 3**(-distance*rangeDef/display_x) * timepenaltyDef * (1/FPS) * 0.1
                             attack["SchadenVer"] = GegnerSchaden
+                            DeinStern["health"] - GegnerSchaden
+                            Gegner["health"] - DeinSchaden
+                            if  DeinStern["health"] < 0:
+                                self.starCaptured(DeinStern["name"], Gegner["name"], "Gegner")
+                            elif Gegner["health"] < 0:
+                                self.starCaptured(DeinStern["name"], Gegner["name"], "DeinStern")
+                            if self.yourTeam == "Team1":
+                                for star in starArrayTeam1:
+                                    if star["name"] == DeinStern["name"]:
+                                        star = DeinStern
+                                for star in starArrayHostileTeam1:
+                                    if star["name"] == DeinStern["name"]:
+                                        star = Gegner
+                            elif self.yourTeam == "Team2":
+                                for star in starArrayTeam2:
+                                    if star["name"] == DeinStern["name"]:
+                                        star = DeinStern
+                                for star in starArrayHostileTeam2:
+                                    if star["name"] == Gegner["name"]:
+                                        star = Gegner
                         else:
-                            message = '{"action": "Schaden", "data": ["schaden": ' + DeinSchaden + ', "stern": ' + Gegner["name"] + ', "von": ' + DeinStern["name"] + ']}'
+                            message = '{"action": "Schaden", "data": {"schaden": ' + str(DeinSchaden) + ', "stern": "' + Gegner["name"] + '", "von": "' + DeinStern["name"] + '"}}'
                             message = message.encode('utf-8')
                             self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                            #print(DeinStern)
+                            #print("-------------------------------------")
+                            if self.yourTeam == "Team1":
+                                for star in self.starArrayTeam2:
+                                    if star["name"] == Gegner["name"]:
+                                        star["health"] -= DeinSchaden
+                                        #print("health wurde auf zeile 2767 angepasst", DeinSchaden)
+                                        if star["health"] <= 0:
+                                            self.starCaptured(DeinStern, Gegner, "DeinStern")
+                            elif self.yourTeam == "Team2":
+                                for star in self.starArrayTeam1:
+                                    if star["name"] == Gegner["name"]:
+                                        star["health"] -= DeinSchaden
+                                        #print("health wurde auf zeile 2774 angepasst", DeinSchaden)
+                                        if star["health"] <= 0:
+                                            self.starCaptured(DeinStern, Gegner, "DeinStern")
                         attack["SchadenAng"] = DeinSchaden
-                        DeinEndPoint = DeinStern["health"]/attack["SchadenVer"]
-                        GegnerEndPoint = Gegner["health"]/DeinSchaden
+                        if attack["SchadenVer"] == 0:
+                            DeinEndPoint = DeinStern["health"]
+                        else:
+                            DeinEndPoint = DeinStern["health"]/attack["SchadenVer"]
+                        if DeinSchaden == 0:
+                            GegnerEndPoint = Gegner["health"]
+                        else:
+                            GegnerEndPoint = Gegner["health"]/DeinSchaden
                         DeineFightPoints = DeinSchaden * DeinStern["health"]
                         GegnerFightPoints = attack["SchadenVer"] * Gegner["health"]
                         if self.yourTeam == "Team1":
@@ -2812,13 +2859,54 @@ else:
                                         stackingpenalty = stackingpenalty * (2/3)**stackingAt
                             GegnerSchaden = DeinSchaden * modAt * attackAt * defenseDef * 3**(-distance*rangeAt/display_x) *timepanaltyAt * stackingpenalty * (1/FPS) * 0.1
                             attack["SchadenAng"] = GegnerSchaden
+                            DeinStern["health"] - GegnerSchaden
+                            Gegner["health"] - DeinSchaden
+                            if  DeinStern["health"] < 0:
+                                self.starCaptured(DeinStern["name"], Gegner["name"], "Gegner")
+                            elif Gegner["health"] < 0:
+                                self.starCaptured(DeinStern["name"], Gegner["name"], "DeinStern")
+                            if self.yourTeam == "Team1":
+                                for star in starArrayTeam1:
+                                    if star["name"] == DeinStern["name"]:
+                                        star = DeinStern
+                                for star in starArrayHostileTeam1:
+                                    if star["name"] == DeinStern["name"]:
+                                        star = Gegner
+                            elif self.yourTeam == "Team2":
+                                for star in starArrayTeam2:
+                                    if star["name"] == DeinStern["name"]:
+                                        star = DeinStern
+                                for star in starArrayHostileTeam2:
+                                    if star["name"] == Gegner["name"]:
+                                        star = Gegner
                         else:
-                            message = '{"action": "Schaden", "data": ["schaden": ' + DeinSchaden + ', "stern": ' + Gegner["name"] + ', "von": ' + DeinStern["name"] + ']}'
+                            message = '{"action": "Schaden", "data": {"schaden": ' + str(DeinSchaden) + ', "stern": "' + Gegner["name"] + '", "von": "' + DeinStern["name"] + '"}}'
                             message = message.encode('utf-8')
                             self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+                            #print(DeinStern, "------------------------")
+                            if self.yourTeam == "Team1":
+                                for star in self.starArrayTeam2:
+                                    if star["name"] == Gegner["name"]:
+                                        star["health"] -= DeinSchaden
+                                        #print("health wurde auf zeile 2888 angepasse", DeinSchaden)
+                                        if star["health"] <= 0:
+                                            self.starCaptured(DeinStern, Gegner, "DeinStern")
+                            elif self.yourTeam == "Team2":
+                                for star in self.starArrayTeam1:
+                                    if star["name"] == Gegner["name"]:
+                                        star["health"] -= DeinSchaden
+                                        #print("health wurde auf zeile 2895 angepasst", DeinSchaden)
+                                        if star["health"] <= 0:
+                                            self.starCaptured(DeinStern, Gegner, "DeinStern")
                         attack["SchadenVer"] = DeinSchaden
-                        DeinEndPoint = DeinStern["health"]/attack["SchadenAng"]
-                        GegnerEndPoint = Gegner["health"]/DeinSchaden
+                        if attack["SchadenAng"] == 0:
+                            DeinEndPoint = DeinStern["health"]
+                        else:
+                            DeinEndPoint = DeinStern["health"]/attack["SchadenAng"]
+                        if DeinSchaden == 0:
+                            GegnerEndPoint = Gegner["health"]
+                        else:
+                            GegnerEndPoint = Gegner["health"]/DeinSchaden
                         DeineFightPoints = DeinSchaden * DeinStern["health"]
                         GegnerFightPoints = attack["SchadenAng"] * Gegner["health"]
                         if self.yourTeam == "Team1":
@@ -3047,7 +3135,12 @@ else:
                     PicSizeY = InfoBoxPicY
 
                     if "Team"+str(star['team']) == self.yourTeam:
-                        if not star['inAttack']:
+                        p = False
+                        for attack in self.Attacks:
+                            if attack["Angreifer"] == star["name"] or attack["Verteidiger"] == star["name"]:
+                                p = True
+                                break
+                        if not p:
                             AttackIcon = self.loadImage("Pictures/sword_white.png", size=(InfoBoxIconSize, InfoBoxIconSize))
                             self.AttackIconSurface = self.gameDisplay.blit(AttackIcon, (300, 550))
                         else:
@@ -3106,7 +3199,12 @@ else:
                     PicSizeY = InfoBoxPicY
 
                     if "Team"+str(star['team']) == self.yourTeam:
-                        if not star['inAttack']:
+                        p = False
+                        for attack in self.Attacks:
+                            if attack["Angreifer"] == star["name"] or attack["Verteidiger"] == star["name"]:
+                                p = True
+                                break
+                        if not p:
                             AttackIcon = self.loadImage("Pictures/sword_white.png", size=(InfoBoxIconSize, InfoBoxIconSize))
                             self.AttackIconSurface = self.gameDisplay.blit(AttackIcon, (300, 550))
                         else:
@@ -3167,7 +3265,12 @@ else:
                     PicSizeY = InfoBoxPicY
 
                     if "Team"+str(star['team']) == self.yourTeam:
-                        if not star['inAttack']:
+                        p = False
+                        for attack in self.Attacks:
+                            if attack["Angreifer"] == star["name"] or attack["Verteidiger"] == star["name"]:
+                                p = True
+                                break
+                        if not p:
                             AttackIcon = self.loadImage("Pictures/sword_white.png", size=(InfoBoxIconSize, InfoBoxIconSize))
                             self.AttackIconSurface = self.gameDisplay.blit(AttackIcon, (300, 550))
                         else:
@@ -3235,7 +3338,12 @@ else:
                     PicSizeY = InfoBoxPicY
 
                     if "Team"+str(star['team']) == self.yourTeam:
-                        if not star['inAttack']:
+                        p = False
+                        for attack in self.Attacks:
+                            if attack["Angreifer"] == star["name"] or attack["Verteidiger"] == star["name"]:
+                                p = True
+                                break
+                        if not p:
                             AttackIcon = self.loadImage("Pictures/sword_white.png", size=(InfoBoxIconSize, InfoBoxIconSize))
                             self.AttackIconSurface = self.gameDisplay.blit(AttackIcon, (300, 550))
                         else:
@@ -3298,7 +3406,12 @@ else:
                     PicSizeY = InfoBoxPicY
 
                     if "Team"+str(star['team']) == self.yourTeam:
-                        if not star['inAttack']:
+                        p = False
+                        for attack in self.Attacks:
+                            if attack["Angreifer"] == star["name"] or attack["Verteidiger"] == star["name"]:
+                                p = True
+                                break
+                        if not p:
                             AttackIcon = self.loadImage("Pictures/sword_white.png", size=(InfoBoxIconSize, InfoBoxIconSize))
                             self.AttackIconSurface = self.gameDisplay.blit(AttackIcon, (300, 550))
                         else:
@@ -3368,15 +3481,20 @@ else:
                             if event.button == 5: scroll_y = max(scroll_y - 15, -2000)
 
                     elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        p = False
+                        for attack in self.Attacks:
+                            if attack["Angreifer"] == star["name"] or attack["Verteidiger"] == star["name"]:
+                                p = True
+                                break
                         pos = pygame.mouse.get_pos()
                         if CloseIconSurface.collidepoint(pos):
                             self.infoBoxOpen = False
                             healErrorStrahlung = False
-                        elif "Team"+str(star['team']) == self.yourTeam and star["cat"] != "Geburt" and not star['inAttack'] and self.AttackIconSurface.collidepoint(pos):
+                        elif "Team"+str(star['team']) == self.yourTeam and star["cat"] != "Geburt" and not p and self.AttackIconSurface.collidepoint(pos):
                             self.infoBoxOpen = False
                             self.chooseAttackStar = True
                             self.AttackStar = self.infoBoxStar
-                        elif "Team"+str(star['team']) == self.yourTeam and star["cat"] != "Geburt" and star['inAttack'] and self.BombIconSurface.collidepoint(pos):
+                        elif "Team"+str(star['team']) == self.yourTeam and star["cat"] != "Geburt" and p and self.BombIconSurface.collidepoint(pos):
                             self.QBurst(star)
                         elif InfoIconSurface.collidepoint(pos):
                             if InfoFlag:
@@ -3402,6 +3520,17 @@ else:
                                                 v = '{"action": "starArrayTeam1", "data": ' + json.dumps(self.starArrayTeam1) + '}'
                                                 v = v.encode('utf-8')
                                                 self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
+                                                v = '{"action": "Schaden", "data": {"schaden": -100, "stern": "' + star["name"] + '", "von": "' + star["name"] + '"}}'
+                                                v = v.encode('utf-8')
+                                                self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
+                                                if self.yourTeam == "Team1":
+                                                    for starSearch in self.starArrayTeam1:
+                                                        if starSearch["name"] == star["name"]:
+                                                            starSearch["health"] -= DeinSchaden
+                                                elif self.yourTeam == "Team2":
+                                                    for starSearch in self.starArrayTeam2:
+                                                        if starSearch["name"] == star["name"]:
+                                                            starSearch["health"] += 100
                                             else:
                                                 print("Stern ist geheilt")
                                         else:
@@ -3423,6 +3552,17 @@ else:
                                                 v = '{"action": "starArrayTeam2", "data": ' + json.dumps(self.starArrayTeam2) + '}'
                                                 v = v.encode('utf-8')
                                                 self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
+                                                v = '{"action": "Schaden", "data": {"schaden": -100, "stern": "' + star["name"] + '", "von": "' + star["name"] + '"}}'
+                                                v = v.encode('utf-8')
+                                                self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
+                                                if self.yourTeam == "Team1":
+                                                    for starSearch in self.starArrayTeam1:
+                                                        if starSearch["name"] == star["name"]:
+                                                            starSearch["health"] -= DeinSchaden
+                                                elif self.yourTeam == "Team2":
+                                                    for starSearch in self.starArrayTeam2:
+                                                        if starSearch["name"] == star["name"]:
+                                                            starSearch["health"] += 100
                                             else:
                                                 self.showError("Stern ist geheilt")
                                         else:
@@ -4569,6 +4709,11 @@ else:
                                             techArray["Weisheit"][7] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
+
+                                    if self.yourTeam == "Team1":
+                                        self.techArrayTeam1 = techArray
+                                    else:
+                                        self.techArrayTeam2 = techArray
 
                                     v = '{"action": "techArray", "data": ' + json.dumps(techArray) + '}'
                                     v = v.encode('utf-8')
@@ -6037,148 +6182,151 @@ else:
 
 
     def starAttack(self, starDef, starAt):
-        print(starAt)
         self.chooseAttackStar = False
         self.playSFX("BattleStart", True, 1)
-        self.OngoingAttacks.append({"starDef": starDef, "starAt": starAt})
-        starDef["inAttack"]=True
-        starAt["inAttack"]=True
-        print(starAt['name'])
+
+        self.Attacks.append({"Angreifer": starAt["name"], "Verteidiger": starDef["name"], "SchadenAng": 0, "SchadenVer": 0, "TeamAng": "Team" + str(starAt["team"]), "TeamVer": "Team" + str(starDef["team"])})
+
         self.OngoingAttacksMods.append({"star": starAt["name"], "time": 5})
-        print(self.OngoingAttacksMods)
-        v = '{"action": "OngoingAttacks", "data": ' + json.dumps(self.OngoingAttacks) + '}'
-        v = v.encode('utf-8')
-        #debugmode
-        self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
 
         v='{"action": "OngoingAttacksMods", "data": '+ json.dumps(self.OngoingAttacksMods) + '}'
         v=v.encode('utf-8')
         self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
-        print("am ende")
+        v='{"action": "NewAttack", "data": '+ json.dumps({"Angreifer": starAt["name"], "Verteidiger": starDef["name"], "SchadenAng": 0, "SchadenVer": 0, "TeamAng": "Team" + str(starAt["team"]), "TeamVer": "Team" + str(starDef["team"])}) + '}'
+        v=v.encode('utf-8')
+        self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
 
 
-    def starCaptured(self, starAt, starDef, starWon):
-        for battle in self.OngoingAttacks:
-            if battle["starDef"]["name"] == starDef["name"]: #and battle["starDef"]["name"] == starDef["name"]:
-                self.OngoingAttacks.remove(battle)
-                starAt["inAttack"] = False
-                starDef["inAttack"] = False
-                for value in self.OngoingAttacksMods:
-                    if value["star"] == battle["starAt"]["name"]:
-                        self.OngoingAttacksMods.remove(value)
-        if starWon == "starAt":
-            if self.infoBoxStar != {} and starDef["name"] == self.infoBoxStar["name"]:
-                self.infoBoxTeam = "Team" + str(starAt["team"])
-            if starAt["team"] == 1:
+    def starCaptured(self, DeinStern, Gegner, starWon):
+        for attack in self.Attacks:
+            if attack["Verteidiger"] == DeinStern:
+                GegnerTeam = attack["TeamAng"]
+                self.Attacks.remove(attack)
+            elif attack["Verteidiger"] == Gegner:
+                self.Attacks.remove(attack)
+                GegnerTeam = attack["TeamVer"]
+        for value in self.OngoingAttacksMods:
+            if value["star"] == DeinStern or value["star"] == Gegner:
+                self.OngoingAttacksMods.remove(value)
+
+        if starWon == "DeinStern":
+            if self.infoBoxStar != {} and self.infoBoxStar["name"] == Gegner:
+                self.infoBoxTeam = self.yourTeam
+            if self.yourTeam == "Team1":
                 self.playSFX("BattleWon", 1, 1)
                 self.playSFX("BattleLost", 2, 1)
-                for star in self.starArrayTeam2:
-                    if star["name"] == starDef["name"]:
-                        mod = 1.0
-                        if self.techArrayTeam1["Kraft"][4]:
-                            mod = 8/5
-                        star["health"] = mod * 300 * star["mass"] / 2   #HealthFormel [für Suche]
-                        star["team"] = 1
-                        self.starArrayTeam2.remove(star)
-                        self.starArrayTeam1.append(star)
-                        break
-            elif starAt["team"] == 2:
+                if GegnerTeam == "Team2":
+                    for star in self.starArrayTeam2:
+                        if star["name"] == Gegner:
+                            mod = 1.0
+                            if self.techArrayTeam1["Kraft"][4]:
+                                mod = 8/5
+                            star["health"] = mod * 300 * star["mass"]/2
+                            star["team"] = 1
+                            self.starArrayTeam2.remove(star)
+                            self.starArrayTeam1.append(star)
+                            break
+                elif GegnerTeam == "Team3":
+                    for star in self.starArrayHostileTeam1:
+                        if star["name"] == Gegner:  #Oder hat man dann gewonnen wenn man das weiße Loch besiegt hat dann müsste man einfach hier die Gewinner und VerliereScreens einblenden
+                            mod = 1.0
+                            if self.techArrayTeam1["Kraft"][4]:
+                                mod = 8/5
+                            star["health"] = mod * 300 * star["mass"]/2
+                            star["team"] = 1
+                            self.starArrayHostileTeam1.remove(star)
+                            self.starArrayTeam1.append(star)
+            elif self.yourTeam == "Team2":
                 self.playSFX("BattleWon", 2, 1)
                 self.playSFX("BattleLost", 1, 1)
-                for star in self.starArrayTeam1:
-                    if star["name"] == starDef["name"]:
-                        mod = 1.0
-                        if self.techArrayTeam2["Kraft"][4]:
-                            mod = 8/5
-                        star["health"] = mod * (star["mass"] * 300) / 2    #HealthFormel [für Suche]
-                        star["team"] = 2
-                        self.starArrayTeam1.remove(star)
-                        self.starArrayTeam2.append(star)
-                        break
+                if GegnerTeam == "Team1":
+                    for star in self.starArrayTeam1:
+                        if star["name"] == Gegner:
+                            mod = 1.0
+                            if self.techArrayTeam2["Kraft"][4]:
+                                mod = 8/5
+                            star["health"] = mod * 300 * star["mass"]/2
+                            star["team"] = 2
+                            self.starArrayTeam1.remove(star)
+                            self.starArrayTeam2.append(star)
+                            break
+                elif GegnerTeam == "Team3":
+                    for star in self.starArrayHostileTeam2:
+                        if star["name"] == Gegner:  #Oder hat man dann gewonnen wenn man das weiße Loch besiegt hat dann müsste man einfach hier die Gewinner und VerliereScreens einblenden
+                            mod = 1.0
+                            if self.techArrayTeam2["Kraft"][4]:
+                                mod = 8/5
+                            star["health"] = mod * 300 * star["mass"]/2
+                            star["team"] = 2
+                            self.starArrayHostileTeam2.remove(star)
+                            self.starArrayTeam2.append(star)
+                            break
 
-            elif starAt["team"] == 3:
-                self.playSFX("BattleLost", 1, 1)
-                for star in self.starArrayTeam1:
-                    if star["name"] == starDef["name"]:
-                        star["health"] = 1.6 * (star["mass"] * 300) / 2    #HealthFormel [für Suche]
-                        star["team"] = 3
-                        self.starArrayTeam1.remove(star)
-                        self.starArrayHostileTeam1.append(star)
-                        break
-
-            elif starAt["team"] == 4:
-                self.playSFX("BattleLost", 2, 1)
-                for star in self.starArrayTeam1:
-                    if star["name"] == starDef["name"]:
-                        star["health"] = 1.6 * (star["mass"] * 300) / 2    #HealthFormel [für Suche]
-                        star["team"] = 3
-                        self.starArrayTeam1.remove(star)
-                        self.starArrayHostileHostileTeam2.append(star)
-                        break
-
-
-        elif starWon == "starDef":
-            if self.infoBoxStar != {} and starAt["name"] == self.infoBoxStar["name"]:
-                self.infoBoxTeam = "Team" + str(starDef["team"])
-            if starDef["team"] == 1:
-                self.playSFX("BattleWon", 1, 1)
-                self.playSFX("BattleLost", 2, 1)
-                for star in self.starArrayTeam2:
-                    if star["name"] == starAt["name"]:
-                        mod = 1.0
-                        if self.techArrayTeam1["Kraft"][4]:
-                            mod = 8/5
-                        star["health"] = mod * (star["mass"] * 300) / 2    #HealthFormel [für Suche]
-                        star["team"] = 1
-                        self.starArrayTeam2.remove(star)
-                        self.starArrayTeam1.append(star)
-                        break
-            elif starDef["team"] == 2:
-                self.playSFX("BattleWon", 2, 1)
-                self.playSFX("BattleLost", 1, 1)
-                for star in self.starArrayTeam1:
-                    if star["name"] == starAt["name"]:
-                        mod = 1.0
-                        if self.techArrayTeam1["Kraft"][4]:
-                            mod = 8/5
-                        star["health"] = mod * (star["mass"] * 300) / 2    #HealthFormel [für Suche]
-                        star["team"] = 2
-                        self.starArrayTeam1.remove(star)
-                        self.starArrayTeam2.append(star)
-                        break
-            elif starDef["team"] == 3:
-                self.playSFX("BattleLost", 1, 1)
-                for star in self.starArrayTeam1:
-                    if star["name"] == starAt["name"]:
-                        star["health"] = 1.6 * (star["mass"] * 300) / 2    #HealthFormel [für Suche]
-                        star["team"] = 3
-                        self.starArrayTeam1.remove(star)
-                        self.starArrayHostileTeam1.append(star)
-                        break
-            elif starDef["team"] == 4:
-                self.playSFX("BattleLost", 2, 1)
-                for star in self.starArrayTeam1:
-                    if star["name"] == starAt["name"]:
-                        star["health"] = 1.6 * (star["mass"] * 300) / 2    #HealthFormel [für Suche]
-                        star["team"] = 4
-                        self.starArrayTeam2.remove(star)
-                        self.starArrayHostileTeam2.append(star)
-                        break
-
+        elif starWon == "Gegner":
+            if self.infoBoxStar != {} and self.infoBoxStar["name"] == DeinStern:
+                self.infoBoxTeam = GegnerTeam
+            if self.yourTeam == "Team1":
+                if GegnerTeam == "Team2":
+                    self.playSFX("BattleWon", 2, 1)
+                    self.playSFX("BattleLost", 1, 1)
+                    for star in self.starArrayTeam1:
+                        if star["name"] == DeinStern:
+                            mod = 1.0
+                            if self.techArrayTeam2["Kraft"][4]:
+                                mod = 8/5
+                            star["health"] = mod * (star["mass"] * 300) / 2
+                            star["team"] = 2
+                            self.starArrayTeam1.remove(star)
+                            self.starArrayTeam2.append(star)
+                            break
+                elif GegnerTeam == "Team3":
+                    for star in self.starArrayTeam1:
+                        if star["name"] == DeinStern:
+                            mod = 1.0
+                            if self.techArrayTeam1["Kraft"][4]:
+                                mod = 8/5
+                            star["health"] = mod * (star["mass"] * 300) / 2
+                            star["team"] = 3
+                            self.starArrayTeam1.remove(star)
+                            self.starArrayHostileTeam1.append(star)
+                            break
+            elif self.yourTeam == "Team2":
+                if GegnerTeam == "Team1":
+                    self.playSFX("BattleWon", 1, 1)
+                    self.playSFX("BattleLost", 2, 1)
+                    for star in self.starArrayTeam2:
+                        if star["name"] == DeinStern:
+                            mod = 1.0
+                            if self.techArrayTeam1["Kraft"][4]:
+                                mod = 8/5
+                            star["health"] = mod * (star["mass"] * 300) / 2
+                            star["team"] = 2
+                            self.starArrayTeam2.remove(star)
+                            self.starArrayTeam1.append(star)
+                            break
+                elif GegnerTeam == "Team3":
+                    for star in self.starArrayTeam2:
+                        if star["name"] == DeinStern:
+                            mod = 1.0
+                            if self.techArrayTeam2["Kraft"][4]:
+                                mod = 8/5
+                            star["health"] = mod * (star["mass"] * 300) / 2
+                            star["team"] = 3
+                            self.starArrayTeam2.remove(star)
+                            self.starArrayHostileTeam2.append(star)
+                            break
         else:
             print("Etwas ist schief gelaufen")
-        #print("starArrayTeam1: ", self.starArrayTeam1)
-        #print("starArrayTeam2: ", self.starArrayTeam2)
-        v = '{"action": "starArrayTeam1", "data": ' + json.dumps(self.starArrayTeam1) + '}'
-        v = v.encode('utf-8')
-        #debugMode
-        self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
-        v = '{"action": "starArrayTeam2", "data": ' + json.dumps(self.starArrayTeam2) + '}'
-        v = v.encode('utf-8')
-        self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
-        v = '{"action": "OngoingAttacks", "data": ' + json.dumps(self.OngoingAttacks) + '}'
-        v = v.encode('utf-8')
-        self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
+
+        if self.yourTeam == "Team1":
+            v = '{"action": "starArrayTeam1", "data": ' + json.dumps(self.starArrayTeam1) + '}'
+            v = v.encode('utf-8')
+            self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
+        elif self.yourTeam == "Team2":
+            v = '{"action": "starArrayTeam2", "data": ' + json.dumps(self.starArrayTeam2) + '}'
+            v = v.encode('utf-8')
+            self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
+
 
 
     def showError(self, ErrorString):
@@ -6283,7 +6431,7 @@ else:
                 cord_y = random.randrange(0 + border_space, display_y - border_space)
             return cord_x, cord_y
 
-
+        #TODO
     def QBurst(self, stern):
         if (self.yourTeam == "Team1" and not self.techArrayTeam1["Kraft"][0]) or (self.yourTeam == "Team2" and not self.techArrayTeam2["Kraft"][0]) or (self.yourTeam == "Team1" and self.strahlungTeam1<200000*stern["mass"]) or (self.yourTeam =="Team2" and self.strahlungTeam2<200000*stern["mass"]):
 
@@ -6295,13 +6443,29 @@ else:
 
         self.playSFX("QBurst", True, 1)
         starAt = stern
-        for battle in self.OngoingAttacks:
-            if battle["starAt"] == starAt:
-                starDef = battle["starDef"]
+        for attack in self.Attacks:
+            if attack["Angreifer"] == starAt["name"]:
+                starDef = attack["Verteidiger"]
+                break
+            elif attack["Verteidiger"] == starAt["name"]:
+                starDef = attack["Angreifer"]
                 break
         starAtAttack = 100*2**(-starAt["mass"]/20)    #Angriff Formel
 
-        distance = ((abs(starAt["cord_x"] - starDef["cord_x"]))** 2 + (abs(starAt["cord_y"] - starDef["cord_y"]))** 2 )**0.5
+        for star in self.starArrayTeam1:
+            if star["name"] == starDef:
+                StarVer = star
+
+        for star in self.starArrayTeam2:
+            if star["name"] == starDef:
+                StarVer = star
+
+        print("Stern: ", stern)
+        print("starAt: ", starAt)
+        print("starDef: ", starDef)
+        print("StarVer: ", StarVer)
+
+        distance = ((abs(starAt["cord_x"] - StarVer["cord_x"]))** 2 + (abs(starAt["cord_y"] - StarVer["cord_y"]))** 2 )**0.5
 
         rangeAt = 1
         attackAt = 1
@@ -6309,6 +6473,7 @@ else:
         defenseAt = 1
         defenseDef = 1
         stackingAt = 1
+        timemod = 0
         for value in self.OngoingAttacksMods:
             if value["star"] == starAt["name"]:
                 print('gibt es')
@@ -6352,15 +6517,23 @@ else:
 
         AtDamage = starAtAttack * attackAt * mod * defenseDef * 3**(-distance*rangeAt/display_x) * timepenaltyAt * (1/FPS)
 
-        starDef["health"] = starDef["health"] - 100 * AtDamage
-
-        v='{"action": "OngoingAttacks", "data":' + json.dumps(self.OngoingAttacks) + '}'
+        v='{"action": "Schaden", "data": {"schaden": ' + str(10 * AtDamage) + ', "stern": "' + starDef + '", "von": "' + starAt["name"] + '"}}'
         v=v.encode('utf-8')
         self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
 
-        if starDef["health"] <= 0:
-            self.starCaptured(starAt, starDef, "starAt")
-
+        if self.yourTeam == "Team1":
+            for star in self.starArrayTeam2:
+                if star["name"] == starDef:
+                    star["health"] -= 10 * AtDamage
+                    #print("Stern health wurde angepasst---------------------------")
+                    if star["health"] <= 0:
+                        self.starCaptured(starAt, StarVer, "DeinStern")
+        elif self.yourTeam == "Team2":
+            for star in self.starArrayTeam1:
+                if star["name"] == starDef:
+                    star["health"] -= 10 * AtDamage
+                    if star["health"] <= 0:
+                        self.starCaptured(starAt, StarVer, "DeinStern")
 
     def RieseErforschenStart(self):
         if self.yourTeam == "Team1":
