@@ -4597,36 +4597,38 @@ else:
                                     #print("Erforschen geklickt ", self.TechInfoString)
                                     if self.yourTeam == "Team1":
                                         techArray = self.techArrayTeam1
+                                        metalle = self.metalleTeam1
                                     else:
                                         techArray = self.techArrayTeam2
+                                        metalle = self.metalleTeam2
 
                                     if self.TechInfoString == "PerfektionI":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionICost and techArray["Perfektion"][0] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionICost
+                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionICost and techArray["Perfektion"][0] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionICost
                                             self.playSFX("PerfektionTech", True, 1)
                                             techArray["Perfektion"][0] = True
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "PerfektionII":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionIICost and techArray["Perfektion"][1] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionIICost
+                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionIICost and techArray["Perfektion"][1] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionIICost
                                             techArray["Perfektion"][1] = True
                                             self.playSFX("PerfektionTech", True, 1)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "PerfektionIII":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionIIICost and techArray["Perfektion"][2] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionIIICost
+                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionIIICost and techArray["Perfektion"][2] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionIIICost
                                             techArray["Perfektion"][2] = True
                                             self.playSFX("PerfektionTech", True, 1)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "PerfektionIV":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionIVCost and techArray["Perfektion"][3] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionIVCost
+                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionIVCost and techArray["Perfektion"][3] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionIVCost
                                             techArray["Perfektion"][3] = True
                                             self.playSFX("PerfektionTech", True, 1)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "PerfektionV":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionVCost and techArray["Perfektion"][4] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionVCost
+                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionVCost and techArray["Perfektion"][4] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionVCost
                                             techArray["Perfektion"][4] = True
                                             self.playSFX("PerfektionTech", True, 1)
                                             self.TechInfoOpen = False
@@ -4637,52 +4639,53 @@ else:
                                             self.playSFX("Klick", 1, 0.8)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "PerfektionVII":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionVIICost and techArray["Perfektion"][6] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionVIICost
+                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionVIICost and techArray["Perfektion"][6] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionVIICost
                                             techArray["Perfektion"][6] = True
                                             self.playSFX("PerfektionTech", 1, 1)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "PerfektionVIII":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionVIIICost and techArray["Perfektion"][7] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionVIIICost
+                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionVIIICost and techArray["Perfektion"][7] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionVIIICost
                                             techArray["Perfektion"][7] = True
                                             self.playSFX("PerfektionTech", 1, 1)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "KraftI":
-                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftICost and techArray["Kraft"][0] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * KraftICost
+                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftICost and techArray["Kraft"][0] == False:
+                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * KraftICost
                                             techArray["Kraft"][0] = True
                                             self.playSFX("KraftTech", 1, 1)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "KraftII":
-                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftIICost and techArray["Kraft"][1] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * KraftIICost
+                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftIICost and techArray["Kraft"][1] == False:
+                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * KraftIICost
                                             techArray["Kraft"][1] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
                                     elif self.TechInfoString == "KraftIII":
-                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftIIICost and techArray["Kraft"][2] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * KraftIIICost
+                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftIIICost and techArray["Kraft"][2] == False:
+                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * KraftIIICost
                                             techArray["Kraft"][2] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
                                     elif self.TechInfoString == "KraftIV":
-                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftIVCost and techArray["Kraft"][3] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * KraftIVCost
+                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftIVCost and techArray["Kraft"][3] == False:
+                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * KraftIVCost
                                             techArray["Kraft"][3] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
                                     elif self.TechInfoString == "KraftV":
-                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftVCost and techArray["Kraft"][4] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * KraftVCost
+                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftVCost and techArray["Kraft"][4] == False:
+                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * KraftVCost
                                             techArray["Kraft"][4] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
                                     elif self.TechInfoString == "KraftVI":
-                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftVICost and techArray["Kraft"][5] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * self.Krafttechmod * KraftVICost
+                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftVICost and techArray["Kraft"][5] == False:
+                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * self.Krafttechmod * KraftVICost
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
+                                            techArray["Kraft"][5] = True
                                     elif self.TechInfoString == "KraftVII":
                                         if techArray["Kraft"][6] == False and not self.SchwarzesLochflag:
                                             self.SchwarzesLochflag = True
@@ -4690,38 +4693,38 @@ else:
                                             self.playSFX("Klick", 1, 0.8)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "KraftVIII":
-                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftVIIICost and techArray["Kraft"][7] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * KraftVIIICost
+                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftVIIICost and techArray["Kraft"][7] == False:
+                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * KraftVIIICost
                                             techArray["Kraft"][7] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitI":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitICost and techArray["Weisheit"][0] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitICost
+                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitICost and techArray["Weisheit"][0] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitICost
                                             techArray["Weisheit"][0] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitII":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitIICost and techArray["Weisheit"][1] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitIICost
+                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitIICost and techArray["Weisheit"][1] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitIICost
                                             techArray["Weisheit"][1] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitIII":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitIIICost and techArray["Weisheit"][2] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitIIICost
+                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitIIICost and techArray["Weisheit"][2] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitIIICost
                                             techArray["Weisheit"][2] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitIV":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitIVCost and techArray["Weisheit"][3] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitIVCost
+                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitIVCost and techArray["Weisheit"][3] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitIVCost
                                             techArray["Weisheit"][3] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitV":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitVCost and techArray["Weisheit"][4] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitVCost
+                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitVCost and techArray["Weisheit"][4] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitVCost
                                             techArray["Weisheit"][4] = True
                                             if self.yourTeam == "Team1":
                                                 for star in self.starArrayTeam1:
@@ -4740,8 +4743,8 @@ else:
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitVI":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitVICost and techArray["Weisheit"][5] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitVICost
+                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitVICost and techArray["Weisheit"][5] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitVICost
                                             techArray["Weisheit"][5] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
@@ -4752,16 +4755,18 @@ else:
                                             self.playSFX("Klick", 1, 0.8)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "WeisheitVIII":
-                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitVIIICost and techArray["Weisheit"][7] == False:
-                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitVIIICost
+                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitVIIICost and techArray["Weisheit"][7] == False:
+                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitVIIICost
                                             techArray["Weisheit"][7] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
 
                                     if self.yourTeam == "Team1":
                                         self.techArrayTeam1 = techArray
+                                        self.metalleTeam1 = metalle
                                     else:
                                         self.techArrayTeam2 = techArray
+                                        self.metalleTeam2 = metalle
 
                                     v = '{"action": "techArray", "data": ' + json.dumps(techArray) + '}'
                                     v = v.encode('utf-8')
