@@ -4475,7 +4475,7 @@ else:
 
                                         if metalle >=self.techcostmod * self.Krafttechmod * KraftVICost and techArray["Kraft"][5] == False:
                                             metalle = metalle -self.techcostmod * self.Krafttechmod * self.Krafttechmod * KraftVICost
-
+                                            TechArray["Kraft"][5] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
                                     elif self.TechInfoString == "KraftVII":
