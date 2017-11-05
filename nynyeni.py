@@ -251,8 +251,7 @@ PerfektionIconIVBlockedURL = "Pictures/PerfektionIV_sw.jpg"
 PerfektionIconIVHeader = "Rho-Ophindi-Strahlung"
 PerfektionIconIVDescription = ["Durch", "ihre", "noch", "geringere", "Masse", "und", "den", "hohen", "Prozentsatz",
                                 "an", "reinem", "Brennstoff", "werden", "Sterne", "während", "ihrer", "Entstehung",
-                                "sogar", "stärker", "strahlen", "als", "in", "ihrer", "Hauptreihenphase",
-                                "Strahlung in Geburtsstadium * 3", " "]
+                                "sogar", "stärker", "strahlen", "als", "in", "ihrer", "Hauptreihenphase.", " "]
 
 PerfektionVCost = 3000
 PerfektionIconV_X = PerfektionIconI_X
@@ -274,7 +273,7 @@ PerfektionIconVIHeader = "Riesen"
 PerfektionIconVIDescription = ["Durch", "eine", "erfolgreiche", "Erforschung", "des", "Aldebaran", "können", "sich",
                                 "unsere", "Sterne", "nach", "dem", "Hauptreihenstadium", "zu", "Riesen", "entwickeln",
                                 "und", "viel", "Strahlung", "abgeben,", "bevor", "sie", "zu", "Zwergen", "werden.",
-                                "Typ Riese wird freigeschalten", "Kosten: " + str(PerfektionVICost) + " Metall", " "]
+                                "Typ Riese wird freigeschalten", " "]
 
 PerfektionVIICost = 3000
 PerfektionIconVII_X = PerfektionIconI_X - 150
@@ -284,8 +283,7 @@ PerfektionIconVIIBlockedURL = "Pictures/PerfektionVII_sw.jpg"
 PerfektionIconVIIHeader = "Ausdauernd"
 PerfektionIconVIIDescription = ["Unsere", "Sterne", "optimieren", "ihren", "Brennstoffhaushalt,", "sodass", "sie",
                                 "viel", "länger", "in", "einer", "Phase", "verweilen", "können,", "bevor", "sie",
-                                "sich", "weitereintwickeln.", "Zeit bis zur Umwandlung * 1.25",
-                                "Kosten: " + str(PerfektionVIICost) + " Metall", " "]
+                                "sich", "weitereintwickeln.", "Zeit bis zur Umwandlung * 1.25", " "]
 
 PerfektionVIIICost = 3000
 PerfektionIconVIII_X = PerfektionIconI_X
@@ -295,8 +293,7 @@ PerfektionIconVIIIBlockedURL = "Pictures/PerfektionVIII_sw.jpg"
 PerfektionIconVIIIHeader = "Schnelles Schalenbrennen"
 PerfektionIconVIIIDescription = ["Die", "äußeren", "Schalen", "werden", "stärker", "Aufgebläht,", "sodass", "sie", "ihren",
                                     "Brennstoff", "schneller", "und", "unter", "größerer", "Strahlungsabgabe", "umsetzen",
-                                    "können.", "Zeit bis zur Umwandlung * 0.8", "Strahlung * 1.4",
-                                    "Kosten: " + str(PerfektionVIIICost) + " Metall", " "]
+                                    "können.", "Zeit bis zur Umwandlung * 0.8", "Strahlung * 1.4", " "]
 
 KraftICost = 3000
 KraftIconI_X = TechSubHeaderTextKraftX
@@ -305,8 +302,7 @@ KraftIconIURL = "Pictures/KraftI.jpg"
 KraftIconIBlockedURL = "Pictures/KraftI_sw.jpg"
 KraftIconIHeader = "Q-Burst"
 KraftIconIDescription = ["Wir", "können", "nun", "einem", "Stern", "befehlen,", "eine", "gewisse", "Menge", "Strahlung",
-                            "zu", "benutzen", "und", "seinem", "momentanen", "Feind", "enormen", "Schaden", "zuzufügen.",
-                            "Ermöglicht Q-Burst", "Kosten: " + str(KraftICost) + " Metall", " "]
+                            "zu", "benutzen", "und", "seinem", "momentanen", "Feind", "enormen", "Schaden", "zuzufügen.", " "]
 
 KraftIICost = 3000
 KraftIconII_X = KraftIconI_X
@@ -326,7 +322,7 @@ KraftIconIIIBlockedURL = "Pictures/KraftIII_sw.jpg"
 KraftIconIIIHeader = "Sonnenwinde"
 KraftIconIIIDescription = ["Wenn", "sie", "sich", "im", "Kampf", "befinden,", "können", "unsere", "Sterne", "bewusst",
                             "Eruptionen", "mit", "großen", "Energiedichten", "verursachen,", "die", "feindliche", "Angriffe",
-                            "vor", "dem", "Auftreffen", "schwächen.", "Kosten: " + str(KraftIIICost) + " Metall", " "]
+                            "vor", "dem", "Auftreffen", "schwächen.", " "]
 
 KraftIVCost = 3000
 KraftIconIV_X = KraftIconI_X
@@ -335,8 +331,7 @@ KraftIconIVURL = "Pictures/KraftIV.jpg"
 KraftIconIVBlockedURL = "Pictures/KraftIV_sw.jpg"
 KraftIconIVHeader = "Blitzkrieg"
 KraftIconIVDescription = ["Unsere", "Sterne", "sind", "darauf", "traniert,", "angeordnete", "Befehle", "sehr", "schnell",
-                            "auszuführen", "und", "ihre", "Vorbereitungen", "möglichst", "schnell", "auszuführen.",
-                            "Zeit bis zum Angriff * 0.6", "Kosten: " + str(KraftIVCost) + " Metall", " "]
+                            "auszuführen", "und", "ihre", "Vorbereitungen", "sofort", "zu", "beenden.", " "]
 
 KraftVCost = 3000
 KraftIconV_X = KraftIconI_X + 75
@@ -346,7 +341,7 @@ KraftIconVBlockedURL = "Pictures/KraftV_sw.jpg"
 KraftIconVHeader = "Schnelle Adaption"
 KraftIconVDescription = ["Sterne,", "über", "die", "wir", "kürzlich", "die", "Kontrolle", "gewonnen", "haben,", "werden",
                             "schneller", "unseren", "Befehlen", "untergeordnet", "und", "sich", "mehr", "von", "den", "Wunden",
-                            "erholen.", "HP nach Übernahme 80% statt 50%", "Kosten: " + str(KraftVCost) + " Metall", " "]
+                            "erholen.", "HP nach Übernahme 80% statt 50%", " "]
 
 KraftVICost = 3000
 KraftIconVI_X = KraftIconI_X
@@ -356,7 +351,7 @@ KraftIconVIBlockedURL = "Pictures/KraftVI_sw.jpg"
 KraftIconVIHeader = "Sternbild-Konfiguration"
 KraftIconVIDescription = ["Um", "gemeinsame", "Angriffe", "auf", "einen", "Feind", "effektiver", "zu", "machen,", "werden",
                             "sich", "unsere", "Sterne", "als", "gemeinsames", "Sternbild", "und", "Kollektiv", "verstehen,",
-                            "anstatt", "den", "Feind", "einzeln", "nierderzuringen.", "Kosten: " + str(KraftVICost) + " Metall", " "]
+                            "anstatt", "den", "Feind", "einzeln", "nierderzuringen.", " "]
 
 KraftVIICost = 3000
 KraftIconVII_X = KraftIconI_X + 125
@@ -367,7 +362,7 @@ KraftIconVIIHeader = "Schwarzes Loch"
 KraftIconVIIDescription = ["Durch", "die", "erfolgreiche", "Erforschung", "von", "Saggaitarius A*", "können", "unsere", "sehr",
                             "Massereichen", "Sterne", "nun", "nach", "ihrem", "Leben", "zu", "Schwarzen", "Löchern", "werden,",
                             "die", "stark", "genug", "sind", "um", "die", "ganze", "Raumzeit", "in", "Stücke", "zu", "reißen",
-                            "Schwarzes Loch möglich", "Kosten: " + str(KraftVIICost) + " Metall", " "]
+                            "Schwarzes Loch möglich", " "]
 
 KraftVIIICost = 3000
 KraftIconVIII_X = KraftIconI_X + 125
@@ -376,7 +371,7 @@ KraftIconVIIIURL = "Pictures/KraftVIII.jpg"
 KraftIconVIIIBlockedURL = "Pictures/KraftVIII_sw.jpg"
 KraftIconVIIIHeader = "Kern-Neuausrichtung"
 KraftIconVIIIDescription = ["Die", "Kerne", "aller", "Sterne", "werden", "neu", "ausgerichtet", "um", "ihre", "Energie", "im",
-                                "Kampf", "besser", "nutzen", "zu", "können.", "Kosten: " + str(KraftVIIICost) + " Metall", " "]
+                                "Kampf", "besser", "nutzen", "zu", "können.", " "]
 
 WeisheitICost = 3000
 WeisheitIconI_X = TechSubHeaderTextWeisheitX
@@ -386,7 +381,7 @@ WeisheitIconIBlockedURL = "Pictures/WeisheitI_sw.jpg"
 WeisheitIconIHeader = "Verbesserete Konvektion"
 WeisheitIconIDescription = ["Indem", "die", "verschiedenen", "Schichten", "von", "Stoffen", "in", "unseren", "Hauptreihensternen",
                             "neu", "sortiert", "werden", "kann", "bedeutend", "mehr", "Strahlung", "ihre", "Oberfläche", "verlassen.",
-                            "Hauptreihensterne: Strahlung + 20 %", "Kosten: " + str(WeisheitICost) + " Metall", " "]
+                            "Hauptreihensterne: Strahlung + 20 %", " "]
 
 WeisheitIICost = 3000
 WeisheitIconII_X = WeisheitIconI_X - 75
@@ -396,7 +391,7 @@ WeisheitIconIIBlockedURL = "Pictures/WeisheitII_sw.jpg"
 WeisheitIconIIHeader = "Schnellvorlauf"
 WeisheitIconIIDescription = ["Wir", "sind", "jetzt", "in", "der", "Lage,", "einen", "Stern", "verfrüht", "in", "seine", "nächste",
                                 "Phase", "übergehen", "zu", "lassen,", "wenn", "wir", "ihm", "einige", "Stahlungsenergie", "zur",
-                                "Verfügung", "stellen", "Schaltet Schnellvorlauf frei", "Kosten: " + str(WeisheitIICost) + " Metall", " "]
+                                "Verfügung", "stellen", "Schaltet Schnellvorlauf frei", " "]
 
 WeisheitIIICost = 3000
 WeisheitIconIII_X = WeisheitIconI_X
@@ -406,7 +401,7 @@ WeisheitIconIIIBlockedURL = "Pictures/WeisheitIII_sw.jpg"
 WeisheitIconIIIHeader = "Entkernung"
 WeisheitIconIIIDescription = ["Wenn", "Sterne", "in", "eine", "andere", "Phase", "übergehen,", "können", "wir", "einen", "größeren",
                                 "Anteil", "an", "Metallen", "aus", "ihrem", "Kern", "nutzen", "als", "bisher.",
-                                "Metalle beim Übergang + 15%", "Kosten: " + str(WeisheitIIICost) + " Metall", " "]
+                                "Metalle beim Übergang + 15%", " "]
 
 WeisheitIVCost = 3000
 WeisheitIconIV_X = WeisheitIconI_X
@@ -416,7 +411,7 @@ WeisheitIconIVBlockedURL = "Pictures/WeisheitIV_sw.jpg"
 WeisheitIconIVHeader = "Feldverteilung"
 WeisheitIconIVDescription = ["Indem", "alle", "unsere", "Sterne", "ihre", "Magnetischen", "Felder", "neu", "ausrichten," "können", "wir",
                                 "feindliche", "Attacken", "abschwächen,", "bevor", "sie", "überhaupt", "in", "die", "Nähe", "unserer",
-                                "Sterne", "kommen.", "Kosten: " + str(WeisheitIVCost) + " Metall", " "]
+                                "Sterne", "kommen.", " "]
 
 WeisheitVCost = 3000
 WeisheitIconV_X = WeisheitIconI_X + 75
@@ -426,8 +421,7 @@ WeisheitIconVBlockedURL = "Pictures/WeisheitV_sw.jpg"
 WeisheitIconVHeader = "Gigantendoktrin"
 WeisheitIconVDescription = ["Unsere", "Sterne", "im", "Riesenstadium", "geben", "sehr", "viel", "Strahlung", "ab,", "sind", "aber", "anfällig",
                             "für", "gegnerische", "Angriffe.", "Um", "diesen", "Zustand", "zu", "verändern,", "können", "wir", "ihnen", "mit",
-                            "dieser", "Doktrin", "mehr", "Kraft", "geben,", "Angriffen", "zu", "wiederstehen.", "HP von Riesen + 10%",
-                            "Kosten: " + str(WeisheitVCost) + " Metall", " "]
+                            "dieser", "Doktrin", "mehr", "Kraft", "geben,", "Angriffen", "zu", "wiederstehen.", "HP von Riesen + 10%", " "]
 
 WeisheitVICost = 3000
 WeisheitIconVI_X = WeisheitIconI_X + 50
@@ -436,8 +430,7 @@ WeisheitIconVIURL = "Pictures/WeisheitVI.jpg"
 WeisheitIconVIBlockedURL = "Pictures/WeisheitVI_sw.jpg"
 WeisheitIconVIHeader = "Erstschlag"
 WeisheitIconVIDescription = ["Wenn", "wir", "Angriffe", "auf", "Feinde", "beginnen,", "können", "wir", "mit", "einem", "Erstschlag", "ihre",
-                                "Verteidigung", "schwächen", "bevor", "der", "Kampf", "überhaupt", "begonnen", "hat.",
-                                "Kosten: " + str(WeisheitVICost) + " Metall", " "]
+                                "Verteidigung", "schwächen", "bevor", "der", "Kampf", "überhaupt", "begonnen", "hat.", " "]
 
 WeisheitVIICost = 3000
 WeisheitIconVII_X = WeisheitIconI_X + 125
@@ -447,8 +440,7 @@ WeisheitIconVIIBlockedURL = "Pictures/WeisheitVII_sw.jpg"
 WeisheitIconVIIHeader = "Neutronenstern"
 WeisheitIconVIIDescription = ["Durch", "unser", "intensives", "Studium", "von", "Scorpio X-1", "können", "unsere", "Sterne", "nun", "den", "Status",
                                 "eines", "Neutronensterns", "erlangen.", "In", "diesem", "Stadium", "können", "sie", "zwar", "keine", "Strahlung",
-                                "abgeben,", "aber", "immense", "Energien", "im", "Kampf", "freisetzen.", "Neutronenstern wird freigeschalten",
-                                "Kosten: " + str(WeisheitVIICost) + " Metall", " "]
+                                "abgeben,", "aber", "immense", "Energien", "im", "Kampf", "freisetzen.", "Neutronenstern wird freigeschalten", " "]
 
 WeisheitVIIICost = 3000
 WeisheitIconVIII_X = WeisheitIconI_X + 125
@@ -457,9 +449,7 @@ WeisheitIconVIIIURL = "Pictures/WeisheitVIII.jpg"
 WeisheitIconVIIIBlockedURL = "Pictures/WeisheitVIII_sw.jpg"
 WeisheitIconVIIIHeader = "Neutronenstern"
 WeisheitIconVIIIDescription = ["Unsere", "Zwerge,", "Neutronensterne", "und", "Schwarzen", "Löcher,", "die", "ältesten", "unter", "unseren", "Sternen",
-                                "werden", "ihr", "über", "Äonen", "gesammeltes", "Wissen", "noch", "besser", "nutzen", "können", "um", "unsere",
-                                "Feinde", "zu", "zermalmen.", "Zwerge +20% Angriff",
-                                "Kosten: " + str(WeisheitVIIICost) + " Metall", " "]
+                                "werden", "ihr", "über", "Äonen", "gesammeltes", "Wissen", "noch", "besser", "nutzen", "können", "um", "unsere", " "]
 
 spaceCloseIcon = 5
 sizeCloseIconX = 20
@@ -1381,7 +1371,7 @@ else:
             build = True
 
         self.connectionFlag = False
-        print("Spiel wird geschlossen")
+       #print("Spiel wird geschlossen")
         pygame.quit()
         quit()
 
@@ -1455,7 +1445,8 @@ else:
                 #print("Raw Data: ----------------")
                 #print(data)
                 if data != "SpielStart1" and data != "SpielStart2":
-
+                   #print("Raw-Data: ----------------------")
+                   #print(data)
                     data = json.loads(data)
                     #print("Data: -----------------")
                     #print(data)
@@ -2357,7 +2348,10 @@ else:
                     Verteidiger = attack["Verteidiger"]
                     TeamAng = attack["TeamAng"]
                     TeamVer = attack["TeamVer"]
-
+                   #print("Angreifer: ", Angreifer)
+                   #print("Verteidiger: ", Verteidiger)
+                   #print("TeamAng: ", TeamAng)
+                   #print("TeamVer: ", TeamVer)
 
                     if TeamAng != self.yourTeam:    #Wenn du nicht der angreifende Stern bist
                         if TeamAng == "Team1":      #Wenn der angreigende Stern aus Team1 ist
@@ -2379,6 +2373,7 @@ else:
                                     DeinStern = star
                                     DeinArray = "starArrayTeam1"
                         elif TeamAng == "Team3":     #Der Stern ist einer durch Events entstandener Stern
+                            print("findet angriffs team")
                             for star in self.starArrayHostileTeam1:
                                 if star["name"] == Angreifer:
                                     Gegner = star
@@ -2388,11 +2383,12 @@ else:
                                     DeinStern = star
                                     DeinArray = "starArrayTeam1"
                         elif TeamAng == "Team4":     #Der Stern ist einer durch Events entstandener Stern
+                            print("findet angriffs team")
                             for star in self.starArrayHostileTeam2:
                                 if star["name"] == Angreifer:
                                     Gegner = star
                                     GegnerArray = "starArrayHostileTeam2"
-                            for star in self.starArrayTeam1:
+                            for star in self.starArrayTeam2:
                                 if star["name"] == Verteidiger:
                                     DeinStern = star
                                     DeinArray = "starArrayTeam2"
@@ -2720,7 +2716,7 @@ else:
                             DeineFarbe = team2_color
                             if TeamAng == "Team1":
                                 GegnerFarbe = team1_color
-                            elif TeamAng == "Team3":
+                            elif TeamAng == "Team4":
                                 GegnerFarbe = hostileteam2_color
 
                     try:
@@ -3317,7 +3313,9 @@ else:
                                             else:
                                                 mod = 1
 
-
+                                           #print("Strahlung Team 1: ", self.strahlungTeam1)
+                                           #print("Health Star: ", star["health"])
+                                           #print("MaxHealth: ", star["mass"] * 300 * mod)
                                             if star["health"] < star["mass"] * 300 * mod:   #HealthFormel [für Suche]
                                                 star["health"] = star["health"] + 100
                                                #print("Health Star nach heilung: ", star["health"])
@@ -3344,12 +3342,12 @@ else:
                                         if self.strahlungTeam2 > 2000000:
                                            #print("Strahlung Team2: ", self.strahlungTeam2)
                                             healErrorStrahlung = False
-
+                                           #print("Health Star: ", star["health"])
                                             if self.techArrayTeam2["Kraft"][4]:
                                                 mod = 8/5
                                             else:
                                                 mod = 1
-
+                                           #print("MaxHealth: ", star["mass"] * 300 * mod)
                                             if star["health"] < star["mass"] * 300 * mod:   #HealthFormel [für Suche]
                                                 star["health"] = star["health"] + 100
                                                #print("Health Star nach Heilung: ", star["health"])
@@ -4368,38 +4366,36 @@ else:
                                     #print("Erforschen geklickt ", self.TechInfoString)
                                     if self.yourTeam == "Team1":
                                         techArray = self.techArrayTeam1
-                                        metalle = self.metalleTeam1
                                     else:
                                         techArray = self.techArrayTeam2
-                                        metalle = self.metalleTeam2
 
                                     if self.TechInfoString == "PerfektionI":
-                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionICost and techArray["Perfektion"][0] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionICost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionICost and techArray["Perfektion"][0] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionICost
                                             self.playSFX("PerfektionTech", True, 1)
                                             techArray["Perfektion"][0] = True
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "PerfektionII":
-                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionIICost and techArray["Perfektion"][1] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionIICost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionIICost and techArray["Perfektion"][1] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionIICost
                                             techArray["Perfektion"][1] = True
                                             self.playSFX("PerfektionTech", True, 1)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "PerfektionIII":
-                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionIIICost and techArray["Perfektion"][2] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionIIICost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionIIICost and techArray["Perfektion"][2] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionIIICost
                                             techArray["Perfektion"][2] = True
                                             self.playSFX("PerfektionTech", True, 1)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "PerfektionIV":
-                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionIVCost and techArray["Perfektion"][3] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionIVCost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionIVCost and techArray["Perfektion"][3] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionIVCost
                                             techArray["Perfektion"][3] = True
                                             self.playSFX("PerfektionTech", True, 1)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "PerfektionV":
-                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionVCost and techArray["Perfektion"][4] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionVCost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionVCost and techArray["Perfektion"][4] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionVCost
                                             techArray["Perfektion"][4] = True
                                             self.playSFX("PerfektionTech", True, 1)
                                             self.TechInfoOpen = False
@@ -4410,53 +4406,52 @@ else:
                                             self.playSFX("Klick", 1, 0.8)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "PerfektionVII":
-                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionVIICost and techArray["Perfektion"][6] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionVIICost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionVIICost and techArray["Perfektion"][6] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionVIICost
                                             techArray["Perfektion"][6] = True
                                             self.playSFX("PerfektionTech", 1, 1)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "PerfektionVIII":
-                                        if self.metalle >= self.techcostmod * self.Perfektiontechmod * PerfektionVIIICost and techArray["Perfektion"][7] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Perfektiontechmod * PerfektionVIIICost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Perfektiontechmod * PerfektionVIIICost and techArray["Perfektion"][7] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Perfektiontechmod * PerfektionVIIICost
                                             techArray["Perfektion"][7] = True
                                             self.playSFX("PerfektionTech", 1, 1)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "KraftI":
-                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftICost and techArray["Kraft"][0] == False:
-                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * KraftICost
+                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftICost and techArray["Kraft"][0] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * KraftICost
                                             techArray["Kraft"][0] = True
                                             self.playSFX("KraftTech", 1, 1)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "KraftII":
-                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftIICost and techArray["Kraft"][1] == False:
-                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * KraftIICost
+                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftIICost and techArray["Kraft"][1] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * KraftIICost
                                             techArray["Kraft"][1] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
                                     elif self.TechInfoString == "KraftIII":
-                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftIIICost and techArray["Kraft"][2] == False:
-                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * KraftIIICost
+                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftIIICost and techArray["Kraft"][2] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * KraftIIICost
                                             techArray["Kraft"][2] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
                                     elif self.TechInfoString == "KraftIV":
-                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftIVCost and techArray["Kraft"][3] == False:
-                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * KraftIVCost
+                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftIVCost and techArray["Kraft"][3] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * KraftIVCost
                                             techArray["Kraft"][3] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
                                     elif self.TechInfoString == "KraftV":
-                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftVCost and techArray["Kraft"][4] == False:
-                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * KraftVCost
+                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftVCost and techArray["Kraft"][4] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * KraftVCost
                                             techArray["Kraft"][4] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
                                     elif self.TechInfoString == "KraftVI":
-                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftVICost and techArray["Kraft"][5] == False:
-                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * self.Krafttechmod * KraftVICost
+                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftVICost and techArray["Kraft"][5] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * self.Krafttechmod * KraftVICost
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
-                                            techArray["Kraft"][5] = True
                                     elif self.TechInfoString == "KraftVII":
                                         if techArray["Kraft"][6] == False and not self.SchwarzesLochflag:
                                             self.SchwarzesLochflag = True
@@ -4464,38 +4459,38 @@ else:
                                             self.playSFX("Klick", 1, 0.8)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "KraftVIII":
-                                        if self.metalle >=self.techcostmod * self.Krafttechmod * KraftVIIICost and techArray["Kraft"][7] == False:
-                                            self.metalle = self.metalle -self.techcostmod * self.Krafttechmod * KraftVIIICost
+                                        if self.metalleTeam1 >=self.techcostmod * self.Krafttechmod * KraftVIIICost and techArray["Kraft"][7] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 -self.techcostmod * self.Krafttechmod * KraftVIIICost
                                             techArray["Kraft"][7] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("KraftTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitI":
-                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitICost and techArray["Weisheit"][0] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitICost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitICost and techArray["Weisheit"][0] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitICost
                                             techArray["Weisheit"][0] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitII":
-                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitIICost and techArray["Weisheit"][1] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitIICost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitIICost and techArray["Weisheit"][1] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitIICost
                                             techArray["Weisheit"][1] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitIII":
-                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitIIICost and techArray["Weisheit"][2] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitIIICost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitIIICost and techArray["Weisheit"][2] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitIIICost
                                             techArray["Weisheit"][2] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitIV":
-                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitIVCost and techArray["Weisheit"][3] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitIVCost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitIVCost and techArray["Weisheit"][3] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitIVCost
                                             techArray["Weisheit"][3] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitV":
-                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitVCost and techArray["Weisheit"][4] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitVCost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitVCost and techArray["Weisheit"][4] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitVCost
                                             techArray["Weisheit"][4] = True
                                             if self.yourTeam == "Team1":
                                                 for star in self.starArrayTeam1:
@@ -4514,8 +4509,8 @@ else:
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
                                     elif self.TechInfoString == "WeisheitVI":
-                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitVICost and techArray["Weisheit"][5] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitVICost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitVICost and techArray["Weisheit"][5] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitVICost
                                             techArray["Weisheit"][5] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
@@ -4526,18 +4521,16 @@ else:
                                             self.playSFX("Klick", 1, 0.8)
                                             self.TechInfoOpen = False
                                     elif self.TechInfoString == "WeisheitVIII":
-                                        if self.metalle >= self.techcostmod * self.Weisheittechmod * WeisheitVIIICost and techArray["Weisheit"][7] == False:
-                                            self.metalle = self.metalle - self.techcostmod * self.Weisheittechmod * WeisheitVIIICost
+                                        if self.metalleTeam1 >= self.techcostmod * self.Weisheittechmod * WeisheitVIIICost and techArray["Weisheit"][7] == False:
+                                            self.metalleTeam1 = self.metalleTeam1 - self.techcostmod * self.Weisheittechmod * WeisheitVIIICost
                                             techArray["Weisheit"][7] = True
                                             self.TechInfoOpen = False
                                             self.playSFX("WeisheitTech", 1, 1)
 
                                     if self.yourTeam == "Team1":
                                         self.techArrayTeam1 = techArray
-                                        self.metalleTeam1 = metalle
                                     else:
                                         self.techArrayTeam2 = techArray
-                                        self.metalleTeam2 = metalle
 
                                     v = '{"action": "techArray", "data": ' + json.dumps(techArray) + '}'
                                     v = v.encode('utf-8')
@@ -5247,7 +5240,7 @@ else:
             while q < len(KraftIconIVDescription):
                 word = KraftIconIVDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q !=len(KraftIconIIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q !=len(KraftIconIVDescription):
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -5296,9 +5289,9 @@ else:
             i = 0
             q = 0
             while q < len(KraftIconVDescription):
-                word = KraftIconIIDescription[q]
+                word = KraftIconVDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconVDescription) - 1:
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -5346,10 +5339,10 @@ else:
             lineString = ""
             i = 0
             q = 0
-            while q < len(KraftIconIIDescription):
+            while q < len(KraftIconVIDescription):
                 word = KraftIconVIDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconVIDescription) - 1:
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -5400,7 +5393,7 @@ else:
             while q < len(KraftIconVIIDescription):
                 word = KraftIconVIIDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconVIIDescription) - 1:
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -5452,7 +5445,7 @@ else:
             while q < len(KraftIconVIIIDescription):
                 word = KraftIconVIIIDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconVIIIDescription) - 1:
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -5503,7 +5496,7 @@ else:
             while q < len(WeisheitIconIDescription):
                 word =WeisheitIconIDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(WeisheitIconIDescription) - 1:
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -5554,7 +5547,7 @@ else:
             while q < len(WeisheitIconIIDescription):
                 word =WeisheitIconIIDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(WeisheitIconIIDescription) - 1:
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -5605,7 +5598,7 @@ else:
             while q < len(WeisheitIconIIIDescription):
                 word =WeisheitIconIIIDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(WeisheitIconIIIDescription) - 1:
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -5656,7 +5649,7 @@ else:
             while q < len(WeisheitIconIVDescription):
                 word =WeisheitIconIVDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(WeisheitIconIVDescription) - 1:
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -5707,7 +5700,7 @@ else:
             while q < len(WeisheitIconVDescription):
                 word =WeisheitIconVDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(WeisheitIconVDescription) - 1:
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -5757,7 +5750,7 @@ else:
             while q < len(WeisheitIconVIDescription):
                 word =WeisheitIconVIDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(WeisheitIconVIDescription) - 1:
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -5808,7 +5801,7 @@ else:
             while q < len(WeisheitIconVIIDescription):
                 word =WeisheitIconVIIDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(WeisheitIconVIIDescription) - 1:
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -5856,10 +5849,10 @@ else:
             lineString = ""
             i = 0
             q = 0
-            while q < len(WeisheitIconIDescription):
-                word =WeisheitIconVIIDescription[q]
+            while q < len(WeisheitIconVIIIDescription):
+                word =WeisheitIconVIIIDescription[q]
                 lineStringTemp = lineString + " " + word
-                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(KraftIconIIDescription) - 1:
+                if self.MainFontSmall.size(lineStringTemp)[0] <= TechInfoSizeX - 2 * TechInfoDescriptionSpaceX and q != len(WeisheitIconVIIIDescription) - 1:
                     lineString = lineStringTemp
                 else:
                     if i == 0:
@@ -6020,30 +6013,36 @@ else:
 
 
     def starCaptured(self, DeinStern, Gegner, starWon):
-        print("Attacks: ", self.Attacks)
-        print("DeinStern: ", DeinStern)
-        print("Gegner: ", Gegner)
-        print("StarWon: ", starWon)
+       #print("Attacks: ", self.Attacks)
+       #print("DeinStern: ", DeinStern)
+       #print("Gegner: ", Gegner)
+       #print("StarWon: ", starWon)
         i = 0
         x = len(self.Attacks)
         q = 0
-        print("X: ", x)
+       #print("X: ", x)
         while i < x:
-            print("I: ", i)
+           #print("I: ", i)
             attack = self.Attacks[i - q]
             i += 1
         #for attack in self.Attacks:
-            print("Attack: ", attack)
+           #print("Attack: ", attack)
 
             if attack["Verteidiger"] == DeinStern:
-                print("Du bist Verteidiger")
+               #print("Du bist Verteidiger")
                 GegnerTeam = attack["TeamAng"]
                 self.Attacks.remove(attack)
                 q += 1
             elif attack["Verteidiger"] == Gegner:
+               #print("Gegner ist verteidiger")
                 GegnerTeam = attack["TeamVer"]
                 self.Attacks.remove(attack)
                 q += 1
+            else:
+                pass
+               #print("In dieser Attacke ist kein Verteidiger der auch zum anderen mit dazugehört hat")
+           #print("------------------")
+       #print("Nochmal Attacks: ", self.Attacks)
 
         for value in self.OngoingAttacksMods:
             if value["star"] == DeinStern or value["star"] == Gegner:
@@ -6063,7 +6062,7 @@ else:
                             star["health"] = mod * 300 * star["mass"]/2
                             star["team"] = 1
                             self.starArrayTeam2.remove(star)
-
+                           #print("Aus Team 1 wird entfernt: ", star)
                             self.starArrayTeam1.append(star)
                             break
                 elif GegnerTeam == "Team3":
@@ -6088,6 +6087,7 @@ else:
                             star["health"] = mod * 300 * star["mass"]/2
                             star["team"] = 2
                             self.starArrayTeam1.remove(star)
+                           #print("aus Team 1 wird entfert: ", star)
                             self.starArrayTeam2.append(star)
                             break
                 elif GegnerTeam == "Team3":
@@ -6117,6 +6117,7 @@ else:
                             star["health"] = mod * (star["mass"] * 300) / 2
                             star["team"] = 2
                             self.starArrayTeam1.remove(star)
+                           #print("Aus Team 1 wird entfernt: ", star)
                             self.starArrayTeam2.append(star)
                             break
                 elif GegnerTeam == "Team3":
@@ -6142,7 +6143,7 @@ else:
                             star["health"] = mod * (star["mass"] * 300) / 2
                             star["team"] = 2
                             self.starArrayTeam2.remove(star)
-
+                           #print("Aus team2 wird entfert: ", star)
                             self.starArrayTeam1.append(star)
                             break
                 elif GegnerTeam == "Team3":
