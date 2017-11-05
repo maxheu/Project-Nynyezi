@@ -576,7 +576,8 @@ specialStarCat = ["Neutronenstern", "Schwarzes Loch", "Riese"]
 specialStarAge = [5000, 5000, 137]
 
 if not pygame.init():
-    print("Initilation not succesful")
+    pass
+   #print("Initilation not succesful")
 
 pygame.font.init()
 pygame.mixer.init()
@@ -809,7 +810,6 @@ else:
         self.starArrayHostileTeam2 = []
         self.gameExit = False
         self.chooseAttackStar = False
-        self.OngoingAttacks = []
         self.OngoingAttacksMods = []
         self.techArrayTeam1 = {"Kraft": [False, False, False, False, False, False, False, False, False],
                                 "Weisheit": [False, False, False, False, False, False, False, False],
@@ -1210,7 +1210,7 @@ else:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    print("Spiel wird geschlossen")
+                   #print("Spiel wird geschlossen")
                     self.connectionFlag = False
                     #debugmode
                     #self.s.close()
@@ -1401,7 +1401,7 @@ else:
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((self.host, self.port))    #Meine Adresse
 
-        print("Connection für Multiplayer wird gestartet")
+       #print("Connection für Multiplayer wird gestartet")
 
         nachricht = "SpielStart" + str(team)
         self.s.sendto(nachricht.encode('utf-8'), (self.gegnerHost, self.gegnerPort))
@@ -1455,26 +1455,21 @@ else:
                 #print("Raw Data: ----------------")
                 #print(data)
                 if data != "SpielStart1" and data != "SpielStart2":
-                    print("Raw-Data: ----------------------")
-                    print(data)
+
                     data = json.loads(data)
                     #print("Data: -----------------")
                     #print(data)
                     if data["action"] == "starArrayTeam1":
                         self.starArrayTeam1 = data["data"]
-                        print("starArrayTeam1 wurde angepasst")
+                       #print("starArrayTeam1 wurde angepasst")
 
                     elif data["action"] == "starArrayTeam2":
                         self.starArrayTeam2 = data["data"]
-                        print("starArrayTeam2 wurde angepasst")
+                       #print("starArrayTeam2 wurde angepasst")
 
                     elif data["action"] == "starArraySpecial":
                         self.starArraySpecial = data["data"]
                         #print("starArraySpecial wurde angepasst")
-
-                    elif data["action"] == "OngoingAttacks":
-                        self.OngoingAttacks = data["data"]
-                        print("OngoingAttacks wurde angepasst")
 
                     elif data["action"] == "OngoingAttacksMods":
                         self.OngoingAttacksMods = data["data"]
@@ -1533,7 +1528,8 @@ else:
                                         self.starCaptured(Stern, Von, "Gegner")
 
                     else:
-                        print("_-_----------Data-Action nicht gefunden-------------------")
+                        pass
+                       #print("_-_----------Data-Action nicht gefunden-------------------")
 
 
     def startGame(self, team):
@@ -2355,238 +2351,13 @@ else:
                 if star["nextLevel"] <= 0:
                     self.nextLevel(star)
 
-            if self.OngoingAttacks is not []:  #Kampf für suche
-                for battle in self.OngoingAttacks:
-                    for star in self.starArrayTeam1:
-                        if star["name"] == battle["starAt"]["name"]:
-                            battle["starAt"] = star
-                        elif star["name"] == battle["starDef"]["name"]:
-                            battle["starDef"] = star
-                    for star in self.starArrayTeam2:
-                        if star["name"] == battle["starAt"]["name"]:
-                            battle["starAt"] = star
-                        elif star["name"] == battle["starDef"]["name"]:
-                            battle["starDef"] = star
-
-                    for star in self.starArrayHostileTeam1:
-                        if star["name"] == battle["starAt"]["name"]:
-                            battle["starAt"] = star
-                        elif star["name"] == battle["starDef"]["name"]:
-                            battle["starDef"] = star
-
-                    for star in self.starArrayHostileTeam2:
-                        if star["name"] == battle["starAt"]["name"]:
-                            battle["starAt"] = star
-                        elif star["name"] == battle["starDef"]["name"]:
-                            battle["starDef"] = star
-
-                    if battle["starAt"]["team"]==battle["starDef"]["team"]:
-                        self.Attacks.remove(battle)
-                        battle["starAt"]["inAttack"] = False
-                        battle["starDef"]["inAttack"] = False
-                        for value in self.OngoingAttacksMods:
-                            if value["star"] == battle["starAt"]["name"]:
-                                self.OngoingAttacksMods.remove(value)
-                        pass
-
-                    starDef = battle["starDef"]
-                    starAt = battle["starAt"]
-                    print(starDef, starAt)
-                    starDefAttack = 100*2**(-starDef["mass"]/20)   #Angriff Formel
-                    starAtAttack = 100*2**(-starAt["mass"]/20)
-
-                    distance = ((abs(starAt["cord_x"] - starDef["cord_x"]))** 2 + (abs(starAt["cord_y"] - starDef["cord_y"]))** 2 )**0.5
-
-                    rangeAt = 1
-                    rangeDef = 1
-                    attackAt = 1
-                    attackDef = 1
-                    defenseAt = 1
-                    defenseDef = 1
-                    stackingAt = 1
-                    modAt = 1
-                    modDef = 1
-                    for value in self.OngoingAttacksMods:
-                        if value["star"] == starAt["name"]:
-                            timemod = value["time"]
-                            break
-
-                    if starAt["team"] == 1 or starAt['team'] == 3:
-                        starAtTech = self.techArrayTeam1
-                    if starAt['team'] == 2 or starAt['team'] == 4:
-                        starAtTech = self.techArrayTeam2
-                    if starDef["team"] == 1 or starDef['team'] == 3:
-                        starDefTech = self.techArrayTeam1
-                    if starDef['team'] == 2 or starDef['team'] == 4:
-                        starDefTech = self.techArrayTeam2
-
-
-                    if "Team"+str(starAt["team"]) == str(self.yourTeam):
-                        attackAt = attackAt * self.attackmod
-                    elif "Team"+str(starDef["team"]) == str(self.yourTeam):
-                        attackDef = attackDef * self.attackmod
-
-                    if starAt['cat'] == 'Geburt':
-                        modAt = 1
-                    elif starAt['cat'] == 'Hauptreihe':
-                        modAt = 1
-                    elif starAt['cat'] == 'Riese' or star['cat'] == 'Hyperriese' or star['cat'] == 'Überriese':
-                        modAt = 0.7
-                    elif starAt['cat'] == 'Zwerg':
-                        if starAtTech['Weisheit'][7]:
-                            modAt = 2.0
-                        else:
-                            modAt = 1.7
-                    elif starAt['cat'] == 'Neutronenstern':
-                        modAt = 2.5
-                    elif starAt['cat'] == 'Schwarzes Loch':
-                        modAt = 3
-                    elif starAt['cat'] == 'Weißes Loch':
-                        modAt = 4
-
-                    if starDef['cat'] == 'Geburt':
-                        modDef = 1
-                    elif starDef['cat'] == 'Hauptreihe':
-                        modDef = 1
-                    elif starDef['cat'] == 'Riese' or star['cat'] == 'Hyperriese' or star['cat'] == 'Überriese':
-                        modDef = 0.7
-                    elif starDef['cat'] == 'Zwerg':
-                        if starDefTech['Weisheit'][7]:
-                            modDef = 1.7
-                        else:
-                            modDef = 2.0
-                    elif starDef['cat'] == 'Neutronenstern':
-                        modDef = 2.5
-                    elif starDef['cat'] == 'Schwarzes Loch':
-                        modDef = 3
-                    elif starDef['cat'] == 'Weißes Loch':
-                        modDef = 2.5
-
-                    if starAtTech["Kraft"][1] == True:
-                        rangeAt = rangeAt * 0.85
-                    if starDefTech['Weisheit'][3]:
-                        rangeAt = rangeAt * 1.3
-                    if starAtTech["Kraft"][3] == True:
-                        defenseAt = defenseAt * 0.85
-                    if starAtTech["Kraft"][8] == True:
-                        attackAt = attackAt * 1.1
-                    if starAtTech["Kraft"][6] == True:
-                        stackingAt = stackingAt * 0.75
-                    if starAtTech["Kraft"][3] == True:
-                        timepenaltyAt = (3-timemod)/3
-                    else:
-                        timepenaltyAt = (5-timemod)/5
-
-                    if starDefTech["Kraft"][2] == True:
-                        rangeDef = rangeDef * 0.85
-                    if starAtTech['Weisheit'][2]:
-                        rangeDef = rangeDef * 1.3
-                    if starDefTech["Kraft"][3] == True:
-                        defenseDef = defenseDef * 0.85
-                    if starDefTech["Kraft"][8] == True:
-                        attackDef = attackDef * 1.1
-                    if starDefTech["Kraft"][3] == True:
-                        timepenaltyDef = 1
-                    else:
-                        timepenaltyDef = (5-timemod)/5
-
-                    stackingpenalty = 3/2**stackingAt    #Stackingpenalty für einen einzelnen angreifenden Stern muss 1 sein
-                    flag = True
-                    i = 0
-                    while flag:
-                        #print("laufindex")
-                        #print(i)
-                        if i>=len(self.OngoingAttacks):
-                            break
-                        battle = self.OngoingAttacks[i]
-                        i += 1
-                        #print(battle["starDef"]["name"])
-                        #print(battle["starAt"]["name"])
-                        if battle["starDef"]["name"] == starDef["name"]:
-                            if battle["starAt"]["name"] == starAt["name"]:
-                                #print("change flag")
-                                flag = False
-                            stackingpenalty = stackingpenalty * (2/3)**stackingAt
-
-                    AtDamage = starAtAttack * modAt * attackAt * defenseDef * 3**(-distance*rangeAt/display_x) * timepenaltyAt * stackingpenalty * (1/FPS) * 0.1
-                    print(starDefAttack, modDef, attackDef, defenseAt, timepenaltyDef)
-                    DefDamage = starDefAttack * modDef* attackDef * defenseAt * 3**(-distance*rangeDef/display_x) * timepenaltyDef * (1/FPS) * 0.1
-
-                    #locvar =starDef["health"]
-                    starDef["health"] = starDef["health"] - AtDamage
-                    starAt["health"] = starAt["health"] - DefDamage
-
-                    # print("starDefHealth: ", starDef["health"])
-                    # print("starAtHealth: ", starAt["health"])
-
-                    if starAt["team"] == 1:
-                        colorAt = team1_color
-                    elif starAt["team"] == 2:
-                        colorAt = team2_color
-                    elif starAt["team"] == 3:
-                        colorAt = hostileteam1_color
-                    elif starAt['team'] == 4:
-                        colorAt = hostileteam2_color
-                    if starDef["team"] == 1:
-                        colorDef = team1_color
-                    elif starDef["team"] == 2:
-                        colorDef = team2_color
-                    elif starDef["team"] == 3:
-                        colorDef = hostileteam1_color
-                    elif starDef['team'] == 4:
-                        colorDef = hostileteam2_color
-
-                    AtEndPoint = starAt["health"]/DefDamage
-                    DefEndPoint = starDef["health"]/AtDamage
-
-                    AtFightPoints = AtDamage * starAt["health"]
-                    DefFightPoints = DefDamage * starDef["health"]
-
-                    #print("AtFightPoints: ", AtFightPoints)
-                    #print("DefFightPoints: ", DefFightPoints)
-
-                    Verhaltniss = (AtFightPoints)/(AtFightPoints + DefFightPoints)  # Einfach Prozent ausrechnen :)
-                    #print("Verhaltniss: ", Verhaltniss)
-
-                    #print("AtEndPoint: ", AtEndPoint)
-                    #print("DefEndPoint: ", DefEndPoint)
-                    #print("Verhaltniss: ", Verhaltniss)
-
-                    point = (int(starAt["cord_x"] + (starDef["cord_x"] - starAt["cord_x"]) * Verhaltniss), int(starAt["cord_y"] + (starDef["cord_y"] - starAt["cord_y"]) * Verhaltniss))
-                    #print("Point: ", point)
-                    #print("--------------------------------------")
-
-                    if self.TechOpen == False:
-                        pygame.draw.line(self.gameDisplay, colorAt, (starAt["cord_x"], starAt["cord_y"]), point, 1)
-                        pygame.draw.line(self.gameDisplay, colorDef, (starDef["cord_x"], starDef["cord_y"]), point, 1)
-                        pygame.draw.circle(self.gameDisplay, colorLaser, point, round(8*(1-timemod/5)))
-
-                    if starDef["health"] <= 0:
-                        self.starCaptured(starAt["name"], starDef["name"], "starAt")
-                    if starAt["health"] <= 0:
-                        self.starCaptured(starAt["name"], starDef["name"], "starDef")
-
-                    for star in self.starArrayTeam1:
-                        if star['name'] == starAt['name']:
-                            star['health'] = starAt['health']
-                        elif star['name'] == starDef['name']:
-                            star['health'] = starDef['health']
-                    for star in self.starArrayTeam2:
-                        if star['name'] == starAt['name']:
-                            star['health'] = starAt['health']
-                        elif star['name'] == starDef['name']:
-                            star['health'] = starDef['health']
-
             if self.Attacks is not []:
                 for attack in self.Attacks:
                     Angreifer = attack["Angreifer"]
                     Verteidiger = attack["Verteidiger"]
                     TeamAng = attack["TeamAng"]
                     TeamVer = attack["TeamVer"]
-                    print("Angreifer: ", Angreifer)
-                    print("Verteidiger: ", Verteidiger)
-                    print("TeamAng: ", TeamAng)
-                    print("TeamVer: ", TeamVer)
+
 
                     if TeamAng != self.yourTeam:    #Wenn du nicht der angreifende Stern bist
                         if TeamAng == "Team1":      #Wenn der angreigende Stern aus Team1 ist
@@ -2729,7 +2500,7 @@ else:
                                     stackingpenalty = stackingpenalty * (2/3)**stackingAt
                                 else:
                                     break
-                        print(stackingpenalty)
+                       #print(stackingpenalty)
                         DeinSchaden = DeinSchaden * modAt * attackAt * defenseDef * 3**(-distance*rangeAt/display_x) *timepenaltyAt * stackingpenalty * (1/FPS) * 0.1
 
                         if TeamVer == "Team3":
@@ -2827,7 +2598,7 @@ else:
                             DeineFarbe = team2_color
                             if TeamVer == "Team1":
                                 GegnerFarbe = team1_color
-                            elif TeamVer == "Team3":
+                            elif TeamVer == "Team4":
                                 GegnerFarbe = hostileteam2_color
 
                     elif self.yourTeam == TeamVer:
@@ -3546,15 +3317,13 @@ else:
                                             else:
                                                 mod = 1
 
-                                            print("Strahlung Team 1: ", self.strahlungTeam1)
-                                            print("Health Star: ", star["health"])
-                                            print("MaxHealth: ", star["mass"] * 300 * mod)
+
                                             if star["health"] < star["mass"] * 300 * mod:   #HealthFormel [für Suche]
                                                 star["health"] = star["health"] + 100
-                                                print("Health Star nach heilung: ", star["health"])
+                                               #print("Health Star nach heilung: ", star["health"])
                                                 self.strahlungTeam1 -= 2000000
-                                                print("Stern wird geheilt: ", self.infoBoxStar["name"])
-                                                print(self.starArrayTeam1)
+                                               #print("Stern wird geheilt: ", self.infoBoxStar["name"])
+                                               #print(self.starArrayTeam1)
                                                 v = '{"action": "starArrayTeam1", "data": ' + json.dumps(self.starArrayTeam1) + '}'
                                                 v = v.encode('utf-8')
                                                 self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
@@ -3562,26 +3331,28 @@ else:
                                                 v = v.encode('utf-8')
                                                 self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
                                             else:
-                                                print("Stern ist geheilt")
+                                                pass
+                                               #print("Stern ist geheilt")
                                         else:
-                                            print("Nicht genug Strahlung")
+                                            pass
+                                           #print("Nicht genug Strahlung")
                                             healErrorStrahlung = True
                                         break
                             elif self.infoBoxStar["team"] == 2 and self.yourTeam == "Team2":
                                 for star in self.starArrayTeam2:
                                     if star["name"] == self.infoBoxStar["name"]:
                                         if self.strahlungTeam2 > 2000000:
-                                            print("Strahlung Team2: ", self.strahlungTeam2)
+                                           #print("Strahlung Team2: ", self.strahlungTeam2)
                                             healErrorStrahlung = False
-                                            print("Health Star: ", star["health"])
+
                                             if self.techArrayTeam2["Kraft"][4]:
                                                 mod = 8/5
                                             else:
                                                 mod = 1
-                                            print("MaxHealth: ", star["mass"] * 300 * mod)
+
                                             if star["health"] < star["mass"] * 300 * mod:   #HealthFormel [für Suche]
                                                 star["health"] = star["health"] + 100
-                                                print("Health Star nach Heilung: ", star["health"])
+                                               #print("Health Star nach Heilung: ", star["health"])
                                                 self.strahlungTeam2 -= 2000000
                                                 v = '{"action": "starArrayTeam2", "data": ' + json.dumps(self.starArrayTeam2) + '}'
                                                 v = v.encode('utf-8')
@@ -3592,7 +3363,7 @@ else:
                                             else:
                                                 self.showError("Stern ist geheilt")
                                         else:
-                                            print("Nicht genug Strahlung")
+                                           #print("Nicht genug Strahlung")
                                             healErrorStrahlung = True
                                         break
                         elif "Team"+str(star['team']) == self.yourTeam and self.NextIconSurface.collidepoint(pos):
@@ -4865,7 +4636,7 @@ else:
                         message = '{"action": "starArraySpecial", "data": ' + json.dumps(self.starArraySpecial) + '}'
                         message = message.encode('utf-8')
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
-                        message = '{"action": "OngoingAttacks", "data": ' + json.dumps(self.OngoingAttacks) + '}'
+                        message = '{"action": "OngoingAttacks", "data": ' + json.dumps(self.Attacks) + '}'
                         message = message.encode('utf-8')
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
                         message = '{"action": "techArray", "data": ' + json.dumps(self.techArrayTeam1) + '}'
@@ -4882,7 +4653,7 @@ else:
                         message = '{"action": "techArray", "data": ' + json.dumps(self.techArrayTeam2) + '}'
                         message = message.encode('utf-8')
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
-                        message = '{"action": "OngoingAttacks", "data": ' + json.dumps(self.OngoingAttacks) + '}'
+                        message = '{"action": "OngoingAttacks", "data": ' + json.dumps(self.Attacks) + '}'
                         message = message.encode('utf-8')
                         self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
                         message = '{"action": "binNochDa", "data": "Filler"}'
@@ -6128,7 +5899,8 @@ else:
             self.TechInfoSurface = self.gameDisplay.blit(self.TechInfo, (WeisheitIconVIII_X - TechInfoSpace - TechInfoSizeX, WeisheitIconVIII_Y + TechInfoSpace, TechInfoSizeX, TechInfoSizeY))
 
         else:
-            print("Error in showInfo: ", IconString)
+            pass
+           #print("Error in showInfo: ", IconString)
 
 
     def nextLevel(self, Changestar):
@@ -6269,14 +6041,9 @@ else:
                 self.Attacks.remove(attack)
                 q += 1
             elif attack["Verteidiger"] == Gegner:
-                print("Gegner ist verteidiger")
                 GegnerTeam = attack["TeamVer"]
                 self.Attacks.remove(attack)
                 q += 1
-            else:
-                print("In dieser Attacke ist kein Verteidiger der auch zum anderen mit dazugehört hat")
-            print("------------------")
-        print("Nochmal Attacks: ", self.Attacks)
 
         for value in self.OngoingAttacksMods:
             if value["star"] == DeinStern or value["star"] == Gegner:
@@ -6296,7 +6063,7 @@ else:
                             star["health"] = mod * 300 * star["mass"]/2
                             star["team"] = 1
                             self.starArrayTeam2.remove(star)
-                            print("Aus Team 1 wird entfernt: ", star)
+
                             self.starArrayTeam1.append(star)
                             break
                 elif GegnerTeam == "Team3":
@@ -6321,7 +6088,6 @@ else:
                             star["health"] = mod * 300 * star["mass"]/2
                             star["team"] = 2
                             self.starArrayTeam1.remove(star)
-                            print("aus Team 1 wird entfert: ", star)
                             self.starArrayTeam2.append(star)
                             break
                 elif GegnerTeam == "Team3":
@@ -6351,7 +6117,6 @@ else:
                             star["health"] = mod * (star["mass"] * 300) / 2
                             star["team"] = 2
                             self.starArrayTeam1.remove(star)
-                            print("Aus Team 1 wird entfernt: ", star)
                             self.starArrayTeam2.append(star)
                             break
                 elif GegnerTeam == "Team3":
@@ -6377,7 +6142,7 @@ else:
                             star["health"] = mod * (star["mass"] * 300) / 2
                             star["team"] = 2
                             self.starArrayTeam2.remove(star)
-                            print("Aus team2 wird entfert: ", star)
+
                             self.starArrayTeam1.append(star)
                             break
                 elif GegnerTeam == "Team3":
@@ -6392,26 +6157,6 @@ else:
                             self.starArrayHostileTeam2.append(star)
                             break
         else:
-            print("Etwas ist schief gelaufen")
-
-        #if self.yourTeam == "Team1":
-        #    v = '{"action": "starArrayTeam1", "data": ' + json.dumps(self.starArrayTeam1) + '}'
-        #    v = v.encode('utf-8')
-        #    self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
-        #elif self.yourTeam == "Team2":
-        #    v = '{"action": "starArrayTeam2", "data": ' + json.dumps(self.starArrayTeam2) + '}'
-        #    v = v.encode('utf-8')
-        #    self.s.sendto(v, (self.gegnerHost, self.gegnerPort))
-
-
-
-    def showError(self, ErrorString):
-        self.showErrorString = ErrorString
-        if ErrorString == "Choose Not Your Team":
-            ErrorBox = pygame.Surface((errorBoxX, errorBoxY))
-            ErrorBox.fill(errorBoxColor)
-
-        elif ErrorString == "Choose No Neutral Star":
             pass
 
 
@@ -6536,10 +6281,10 @@ else:
             if star["name"] == starDef:
                 StarVer = star
 
-        print("Stern: ", stern)
-        print("starAt: ", starAt)
-        print("starDef: ", starDef)
-        print("StarVer: ", StarVer)
+       #print("Stern: ", stern)
+       #print("starAt: ", starAt)
+       #print("starDef: ", starDef)
+       #print("StarVer: ", StarVer)
 
         distance = ((abs(starAt["cord_x"] - StarVer["cord_x"]))** 2 + (abs(starAt["cord_y"] - StarVer["cord_y"]))** 2 )**0.5
 
@@ -6552,7 +6297,7 @@ else:
         timemod = 0
         for value in self.OngoingAttacksMods:
             if value["star"] == starAt["name"]:
-                print('gibt es')
+               #print('gibt es')
                 timemod = value["time"]
                 break
 
@@ -6947,7 +6692,7 @@ else:
                                         "team": 3,
                                         "health": starHealth,
                                         "nextLevel": 60*30})
-            print("staradded")
+           #print("staradded")
         if self.yourTeam == "Team2":
             while True:
                 cord_x = random.randrange(0+border_space, display_x/2-border_space)
@@ -6989,75 +6734,6 @@ else:
                                         "team": 4,
                                         "health": starHealth,
                                         "nextLevel": 60*30})
-
-
-    # def drawInfo(self):
-    #     star = self.infoBoxStar
-    #     cord_x = star["cord_x"]
-    #     cord_y = star["cord_y"]
-    #     InfoBox = pygame.Surface((infoBox_x, infoBox_y))#, infoBoxColor)
-    #     InfoBox.fill(infoBoxColor)
-    #     if abs(cord_x + spaceInfoBox - display_x) > infoBox_x and abs(cord_y + spaceInfoBox - display_y) > infoBox_y:   #Es ist genug Platz da die Box rechts unten vom Stern zu platieren
-    #         InfoBox = self.fillInfoBox(star, InfoBox)
-    #         self.InfoBoxSurface = self.gameDisplay.blit(InfoBox, [cord_x + spaceInfoBox, cord_y + spaceInfoBox, infoBox_x, infoBox_y])
-    #         self.infoBoxRotation = "Right-Down"
-    #     elif abs(cord_x + spaceInfoBox - display_x) > infoBox_x and cord_y - spaceInfoBox - infoBox_y > 0:
-    #         InfoBox = self.fillInfoBox(star, InfoBox)
-    #         self.InfoBoxSurface = self.gameDisplay.blit(InfoBox, [cord_x + spaceInfoBox, cord_y - spaceInfoBox - infoBox_y, infoBox_x, infoBox_y])
-    #         self.infoBoxRotation = "Right-Up"
-    #     elif cord_x - spaceInfoBox - infoBox_x > 0 and abs(cord_y + spaceInfoBox - display_y) > infoBox_y:
-    #         InfoBox = self.fillInfoBox(star, InfoBox)
-    #         self.InfoBoxSurface = self.gameDisplay.blit(InfoBox, [cord_x - spaceInfoBox - infoBox_x, cord_y + spaceInfoBox, infoBox_x, infoBox_y])
-    #         self.infoBoxRotation = "Left-Down"
-    #     elif cord_x - spaceInfoBox - infoBox_x > 0 and cord_y - spaceInfoBox - infoBox_y > 0:
-    #         InfoBox = self.fillInfoBox(star, InfoBox)
-    #         self.InfoBoxSurface = self.gameDisplay.blit(InfoBox, [cord_x - spaceInfoBox - infoBox_x, cord_y - spaceInfoBox - infoBox_y, infoBox_x, infoBox_y])
-    #         self.infoBoxRotation = "Left-Up"
-    #     else:
-    #         print("ERROR in drawInfo()")
-
-    # def fillInfoBox(self, star, InfoBox):
-    #     self.CloseIconSurface = InfoBox.blit(self.CloseIcon, (infoBox_x - spaceCloseIcon - sizeCloseIconX, spaceCloseIcon))
-    #     self.HeaderText = self.MainFont.render(star["name"], True, HeaderTextColor)
-    #     self.HeaderTextSurface = InfoBox.blit(self.HeaderText, (headerTextX, headerTextY))
-    #     self.CatText = self.MainFontSmall.render("Kat.: " + star["cat"], True, CatTextColor)
-    #     self.CatTextSurface = InfoBox.blit(self.CatText, (catTextX, catTextY))
-    #     self.AgeText = self.MainFontSmall.render("Alter: " + str(star["age"]) + " Mio. Jahre", True, ageTextColor)
-    #     self.AgeTextSurface = InfoBox.blit(self.AgeText, (ageTextX, ageTextY))
-    #     self.MassText = self.MainFontSmall.render("Masse: " + str(star["mass"]) + " Sonnenm.", True, massTextColor)
-    #     self.MassTextSurface = InfoBox.blit(self.MassText, (massTextX, massTextY))
-    #     if star["team"] != 0:
-    #         self.NextLevelText = self.MainFontSmall.render("nächsten Level: " + str(int(star["nextLevel"])) + " sek.", True, nextLevelTextColor)
-    #         self.NextLevelTextSurface = InfoBox.blit(self.NextLevelText, (NextLevelTextX, NextLevelTextY))
-    #     if self.infoBoxTeam == self.yourTeam:
-    #         #self.AttackText = self.MainFontSmall.render("AttackPower", True, attackTextColor)
-    #         #self.AttackTextSurface = InfoBox.blit(self.AttackText, (attackTextX, attackTextY))
-    #         self.HealthText = self.MainFontSmall.render("Health: " + str(round(star["health"])), True, HealthTextColor)
-    #         self.HealthTextSurface = InfoBox.blit(self.HealthText, (healthTextX, healthTextY))
-    #     if star["cat"] == "Hauptreihe":
-    #         self.PicSurface = InfoBox.blit(self.PicHauptreihe, (PicSpaceX, PicSpaceY))
-    #     elif star["cat"] == "Überriese" or star["cat"] == "Hyperriese" or star["cat"] == "Riese":
-    #         self.PicSurface = InfoBox.blit(self.PicRiese, (PicSpaceX, PicSpaceY))
-    #     elif star["cat"] == "Zwerg":
-    #         self.PicSurface = InfoBox.blit(self.PicZwerg, (PicSpaceX, PicSpaceY))
-    #     elif star["cat"] == "Neutronenstern":
-    #         self.PicSurface = InfoBox.blit(self.PicNeutronenstern, (PicSpaceX, PicSpaceY))
-    #     elif star["cat"] == "Geburt":
-    #         self.PicSurface = InfoBox.blit(self.PicGeburt, (PicSpaceX, PicSpaceY))
-    #     elif star["cat"] == "Schwarzes Loch":
-    #         self.PicSurface = InfoBox.blit(self.PicSchwarzesLoch, (PicSpaceX, PicSpaceY))
-    #     if star["inAttack"] == True and self.infoBoxTeam == self.yourTeam:
-    #         self.BombIconSurface = InfoBox.blit(self.BombIcon, (buttonSpaceX, infoBox_y - 2 * buttonSpaceY - 2 * buttonY))
-    #         self.HealIconSurface = InfoBox.blit(self.HealIcon, (infoBox_x - buttonSpaceX, infoBox_y - 2 * buttonSpaceY - 2 * buttonY))
-    #         self.FastForwardIconSurface = InfoBox.blit(self.FastForwardIcon, (buttonSpaceX, infoBox_y - buttonSpaceY - buttonY))
-    #         self.UpgradeIconSurface = InfoBox.blit(self.UpgradeIcon, (infoBox_x - buttonSpaceX, infoBox_y - buttonSpaceY - buttonY))
-    #     elif star["inAttack"] == False and self.infoBoxTeam == self.yourTeam:
-    #         self.AttackIconSurface = InfoBox.blit(self.AttackIcon, (buttonSpaceX, infoBox_y - 2 * buttonSpaceY - 2 * buttonY))
-    #         self.HealIconSurface = InfoBox.blit(self.HealIcon, (infoBox_x - buttonSpaceX - buttonX, infoBox_y - 2 * buttonSpaceY - 2 * buttonY))
-    #         self.FastForwardIconSurface = InfoBox.blit(self.FastForwardIcon, (buttonSpaceX, infoBox_y - buttonSpaceY - buttonY))
-    #         self.UpgradeIconSurface = InfoBox.blit(self.UpgradeIcon, (infoBox_x - buttonSpaceX - buttonX, infoBox_y - buttonSpaceY - buttonY))
-
-    #     return InfoBox
 
     #Funktion um sound beim richtigen team zu spielen
     def playSFX(self, soundname, team, volume):
