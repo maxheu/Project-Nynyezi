@@ -652,33 +652,33 @@ class Nynyezi:
         self.Attacks = []
 
         self.EventButtonSurfaces = []
-        self.timer = [{"time": 60*30, "name": "gameend", "effect": "self.gameover = True", "ongoingeffect": " "}, {"time": 40, "name": "Crisis_Dark_Matter", "effect":
-"""
-roll = random.randint(0, 100)
-counter = 0
-if self.yourTeam == 'Team1':
-    for star in self.starArrayTeam1:
-        if star['cat'] == 'Neutronenstern':
-            counter += star['mass']*2/3
-        elif star['cat'] == 'Schwarzes Loch':
-            counter += star['mass']*1.2
-else:
-    for star in self.starArrayTeam2:
-        if star['cat'] == 'Neutronenstern':
-            counter += star['mass']*2/3
-        elif star['cat'] == 'Schwarzes Loch':
-            counter += star['mass']*1.2
-print(roll, "roll", counter, "counter")
-if roll in range(-15, round(counter-15)):
-    self.drawEvent('Crisis_Dark_Matter_Start')
-    for timer in self.timer:
-        if timer['name'] == 'Crisis_Dark_Matter':
-            self.timer.remove(timer)
-else:
-    for timer in self.timer:
-        if timer['name'] == 'Crisis_Dark_Matter':
-            timer['time'] = 40
-""", "ongoingeffect": "perpetual"}]
+        self.timer = [{"time": 60*30, "name": "gameend", "effect": "self.gameover = True", "ongoingeffect": " "}]
+#          {"time": 40, "name": "Crisis_Dark_Matter", "effect":
+# """
+# roll = random.randint(0, 100)
+# counter = 0
+# if self.yourTeam == 'Team1':
+#     for star in self.starArrayTeam1:
+#         if star['cat'] == 'Neutronenstern':
+#             counter += star['mass']*2/3
+#         elif star['cat'] == 'Schwarzes Loch':
+#             counter += star['mass']*1.2
+# else:
+#     for star in self.starArrayTeam2:
+#         if star['cat'] == 'Neutronenstern':
+#             counter += star['mass']*2/3
+#         elif star['cat'] == 'Schwarzes Loch':
+#             counter += star['mass']*1.2
+# if roll in range(-15, round(counter-15)):
+#     self.drawEvent('Crisis_Dark_Matter_Start')
+#     for timer in self.timer:
+#         if timer['name'] == 'Crisis_Dark_Matter':
+#             self.timer.remove(timer)
+# else:
+#     for timer in self.timer:
+#         if timer['name'] == 'Crisis_Dark_Matter':
+#             timer['time'] = 40
+# """, "ongoingeffect": "perpetual"}]
         self.Events = [{"name": "ersteEntwicklung", "Header": "Die erste Entwicklung", "text": "Einer eurer Sterne hat lange genug gelebt um in eine neue Lebensphase überzugehen. Alle eure Sterne entwicklen sich mit der Zeit und durchlaufen verschiedene Stadien.", "state": False, "buttons": [{"name": "OK", "effect": " ", "bedingung": "True", "hovertext": None}]}, {"name": "RieseErforschen", "Header": "Die Geheimnisse des Aldebaran", "text": "Aldebaran ist wahrlich ein Riese mit Herz und Seele. Er ist 45 mal größer als die Sonne und leuchtet gigantische 150 mal so hell wie sie. Er verbrennt in seiner aufgeblähten Schale stoffe viel weiter als nur bis zum Helium und nutz viel mehr von seinem Brennstoffvorrat.", "state": False, "buttons": [{"name": "Später", "effect": " ", "bedingung": "True", "hovertext": None}, {"name": "Startet die Erforschung", "effect": "self.RieseErforschenStart()", "bedingung": "(self.metalleTeam1>500 and self.strahlungTeam1>=2000000 and self.yourTeam == 'Team1') or (self.metalleTeam2>500 and self.strahlungTeam2>=2000000 and self.yourTeam == 'Team2')", "hovertext": "Die Erforschung wird in einiger Zeit abgeschlossen sein. Kostet 2 Mio. Strahlung und 500 Metalle."}]}, {"name": "SchwarzeslochErforschen", "Header": "Die Macht des Saggitarius A*", "text": "In der Mitte der Galaxis trohnt Saggitarius A*. Mit ihrer tatsächlichen Masse von etwa 4 Mio Sonnenmassen ist sie gigantisch und kaum vorstellbar. Schon lange wollen wir seine Macht entschlüsseln. Nach so langer Zeit könnten wir dieses Ziel endlich erreichen.", "state": False, "buttons": [{"name": "Später", "effect": " ", "bedingung": "True", "hovertext": None}, {"name": "Startet die Erforschung", "effect": "self.SchwarzeslochErforschenStart()", "bedingung": "(self.metalleTeam1>500 and self.strahlungTeam1>=2000000 and self.yourTeam == 'Team1') or (self.metalleTeam2>500 and self.strahlungTeam2>=2000000 and self.yourTeam == 'Team2')", "hovertext": "Die Erforschung wird in weniger Zeit abgeschlossen sein. Kostet 2 Mio. Strahlung und 500 Metall"}]}, {"name": "NeutronsternErforschen", "Header": "Die Erfahrung des Scorpio X-1", "text": "Der Neutronenstern Scorpio X-1 ist ein gigant seiner eigenen Klasse. Er ist eine der stärksten Röntgenquellen in unserer Galaxis, unglaublich dicht und sehr mächtig. Dieses Stadium wollen wir schon lange für unsere eigenen Sterne erreichen.", "state": False, "buttons": [{"name": "Später", "effect": " ", "bedingung": "True", "hovertext": None}, {"name": "Startet die Erforschung", "effect": "self.NeutronsternErforschenStart()", "bedingung": "(self.metalleTeam1>500 and self.strahlungTeam1>=2000000 and self.yourTeam == 'Team1') or (self.metalleTeam2>500 and self.strahlungTeam2>=2000000 and self.yourTeam == 'Team2')", "hovertext": "Die Erforschung wird in weniger Zeit abgeschlossen sein. Kostet 2 Mio. Strahlung und 500 Metall."}]}, {"name": "RieseErforscht", "Header": "Geheimnisse Gelueftet", "text": "Du hast einen Riesen erforscht und dadurch die Entwicklungsstufe Riese freigeschaltet! Riesen sind Sterne, deren Radius zwischen 10 und 100 Sonnenradien beträgt. Aufgrund ihrer Größe emittieren Riesen sehr viel Strahlung und produzieren beim Übergang ins Zwergenstadium viele Metalle.", "state": False, "buttons": [{"name": "Ein Großer Schritt", "effect":
 """
 if self.yourTeam=='Team1':
@@ -2373,7 +2373,6 @@ else:
                                     DeinStern = star
                                     DeinArray = "starArrayTeam1"
                         elif TeamAng == "Team3":     #Der Stern ist einer durch Events entstandener Stern
-                            print("findet angriffs team")
                             for star in self.starArrayHostileTeam1:
                                 if star["name"] == Angreifer:
                                     Gegner = star
@@ -2383,7 +2382,6 @@ else:
                                     DeinStern = star
                                     DeinArray = "starArrayTeam1"
                         elif TeamAng == "Team4":     #Der Stern ist einer durch Events entstandener Stern
-                            print("findet angriffs team")
                             for star in self.starArrayHostileTeam2:
                                 if star["name"] == Angreifer:
                                     Gegner = star
@@ -2434,6 +2432,8 @@ else:
                     elif TeamAng == TeamVer:
                         self.Attacks.remove(attack)
                         continue
+
+                    print(DeinStern, Gegner)
 
                     DeinSchaden = 100*2**(-DeinStern["mass"]/20)
                     distance = ((abs(DeinStern["cord_x"] - Gegner["cord_x"]))** 2 + (abs(DeinStern["cord_y"] - Gegner["cord_y"]))** 2 )**0.5
@@ -2499,7 +2499,7 @@ else:
                        #print(stackingpenalty)
                         DeinSchaden = DeinSchaden * modAt * attackAt * defenseDef * 3**(-distance*rangeAt/display_x) *timepenaltyAt * stackingpenalty * (1/FPS) * 0.1
 
-                        if TeamVer == "Team3":
+                        if TeamVer == "Team3" or TeamVer == "Team4":
                             if DeinStern['cat'] == 'Geburt':
                                 modDef = 1
                             elif DeinStern['cat'] == 'Hauptreihe':
@@ -2515,9 +2515,26 @@ else:
                                 modDef = 2.5
                             elif DeinStern['cat'] == 'Schwarzes Loch':
                                 modDef = 3
-                            elif starAt['cat'] == 'Weißes Loch':
+                            elif DeinStern['cat'] == 'Weißes Loch':
                                 modDef = 2.5
 
+                            if Gegner['cat'] == 'Geburt':
+                                modDef = 1
+                            elif Gegner['cat'] == 'Hauptreihe':
+                                modDef = 1
+                            elif Gegner['cat'] == 'Riese' or Gegner['cat'] == 'Hyperriese' or Gegner['cat'] == 'Überriese':
+                                modDef = 0.7
+                            elif Gegner['cat'] == 'Zwerg':
+                                if DeinTechBaum['Weisheit'][7]:
+                                    modDef = 2.0
+                                else:
+                                    modDef = 1.7
+                            elif Gegner['cat'] == 'Neutronenstern':
+                                modDef = 2.5
+                            elif Gegner['cat'] == 'Schwarzes Loch':
+                                modDef = 3
+                            elif Gegner['cat'] == 'Weißes Loch':
+                                modDef = 2.5
                             if DeinTechBaum["Kraft"][8] == True:
                                 attackDef = attackDef * 1.1
                             if DeinTechBaum["Kraft"][3] == True:
@@ -2630,8 +2647,25 @@ else:
                             timepenaltyDef = (5-timemod)/5
 
                         DeinSchaden = DeinSchaden * modDef * attackDef * defenseAt * 3**(-distance*rangeDef/display_x) * timepenaltyDef * (1/FPS) * 0.1
-                        if TeamAng == "Team3":
-                            modAt = 4
+                        
+                        if Gegner["team"] == "Team3" or Gegner["team"] == "Team4":
+                            if Gegner['cat'] == 'Geburt':
+                                modAt = 1
+                            elif Gegner['cat'] == 'Hauptreihe':
+                                modAt = 1
+                            elif Gegner['cat'] == 'Riese' or Gegner['cat'] == 'Hyperriese' or Gegner['cat'] == 'Überriese':
+                                modAt = 0.7
+                            elif Gegner['cat'] == 'Zwerg':
+                                if DeinTechBaum['Weisheit'][7]:
+                                    modAt = 2.0
+                                else:
+                                    modAt = 1.7
+                            elif Gegner['cat'] == 'Neutronenstern':
+                                modAt = 2.5
+                            elif Gegner['cat'] == 'Schwarzes Loch':
+                                modAt = 3
+                            elif Gegner['cat'] == 'Weißes Loch':
+                                modAt = 2.5
 
                             if DeinTechBaum["Kraft"][1] == True:    #
                                 rangeAt = rangeAt * 0.85
@@ -2656,8 +2690,8 @@ else:
                                         stackingpenalty = stackingpenalty * (2/3)**stackingAt
                             GegnerSchaden = DeinSchaden * modAt * attackAt * defenseDef * 3**(-distance*rangeAt/display_x) * timepenaltyAt * stackingpenalty * (1/FPS) * 0.1
                             attack["SchadenAng"] = GegnerSchaden
-                            DeinStern["health"] - GegnerSchaden
-                            Gegner["health"] - DeinSchaden
+                            DeinStern["health"] += - GegnerSchaden
+                            Gegner["health"] += - DeinSchaden
                             if  DeinStern["health"] < 0:
                                 self.starCaptured(DeinStern["name"], Gegner["name"], "Gegner")
                             elif Gegner["health"] < 0:
@@ -5939,14 +5973,16 @@ else:
 
 
     def nextLevel(self, Changestar):
-        if Changestar["team"] == 1:
+        if (Changestar["team"] == 1 or Changestar["team"] == 3) and self.yourTeam == "Team1":
             starArray = self.starArrayTeam1
             techArray = self.techArrayTeam1
             metalle = self.metalleTeam1
-        else:
+        elif (Changestar["team"] == 2 or Changestar["team"] == 4) and self.yourTeam == "Team2":
             starArray = self.starArrayTeam2
             metalle = self.metalleTeam2
             techArray = self.techArrayTeam2
+        else:
+            return
         for star in starArray:
             if star["name"] == Changestar["name"]:
                 mod = 1
@@ -5957,16 +5993,16 @@ else:
                 if star["cat"] == "Geburt":
                     if star["mass"] <= 0.05:
                         star["cat"] = "Zwerg"
-                        self.playSFX("EndstadiumErreicht", 1, 1.0)
+                        self.playSFX("EndstadiumErreicht", True, 1.0)
                         star["nextLevel"] = mod/(star["masse"]+1)**0.5*60/0.1  #TimeFormel [für Suche]
                     else:
                         star["cat"] = "Hauptreihe"
-                        self.playSFX("ZwischenstadiumErreicht", 1, 1.0)
+                        self.playSFX("ZwischenstadiumErreicht", True, 1.0)
                         star["nextLevel"] = 2 * mod/(star["mass"]+1)**0.5*60/0.1   #TimeFormel [für Suche]
                 elif star["cat"] == "Hauptreihe":
                     if star["mass"] <= 0.3:
                         star["cat"] = "Zwerg"
-                        self.playSFX("EndstadiumErreicht", 1, 1.0)
+                        self.playSFX("EndstadiumErreicht", True, 1.0)
                         star["nextLevel"] = mod/(star["mass"]+1)**0.5*60/0.1   #TimeFormel [für Suche]
                     elif techArray["Perfektion"][5]:
                         if techArray['Weisheit'][4]:
@@ -5974,11 +6010,11 @@ else:
                         star["cat"] = "Riese"
                         if not self.ersterRieseflag:
                             self.ersterRiese = star
-                        self.playSFX("ZwischenstadiumErreicht", 1, 1.0)
+                        self.playSFX("ZwischenstadiumErreicht", True, 1.0)
                         star["nextLevel"] = mod/(star["mass"]+1)**0.5*60/0.1   #TimeFormel [für Suche]
                     elif star["mass"] <= 3:
                         star["cat"] = "Zwerg"
-                        self.playSFX("EndstadiumErreicht", 1, 1.0)
+                        self.playSFX("EndstadiumErreicht", True, 1.0)
                         star["nextLevel"] = mod/(star["mass"]+1)**0.5*60/0.1   #TimeFormel [für Suche]
                     elif techArray["Kraft"][6] and not techArray["Weisheit"][6]:
                         star['cat'] = "Schwarzes Loch"
@@ -5992,11 +6028,11 @@ else:
                         self.drawEvent("chooseCat", star=star)
                     else:
                         star["cat"] = "Zwerg"
-                        self.playSFX("EndstadiumErreicht", 1, 1.0)
+                        self.playSFX("EndstadiumErreicht", True, 1.0)
                         star["nextLevel"] = mod/(star["mass"]+1)**0.5*60/0.1   #TimeFormel [für Suche]
 
                 elif star["cat"] == "Riese" or star["cat"] == "Hyperriese" or star["cat"] == "Überriese":
-                    self.playSFX("EndstadiumErreicht", 1, 1.0)
+                    self.playSFX("EndstadiumErreicht", True, 1.0)
                     star["nextLevel"] = mod/(star["mass"]+1)**0.5*60/0.1   #TimeFormel [für Suche]
                     if star["mass"] <= 3 or (not techArray["Kraft"][6] and not techArray["Weisheit"][6]):
                         star["cat"] = "Zwerg"
@@ -6033,9 +6069,15 @@ else:
             self.starArrayTeam2 = starArray
             self.metalleTeam2 = metalle
             self.techArrayTeam2 = techArray
-        for star in starArray:
 
-                break
+        if self.yourTeam == "Team1":
+            message = '{"action": "starArrayTeam1", "data": ' + json.dumps(self.starArrayTeam1) + '}'
+            message = message.encode('utf-8')
+            self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
+        if self.yourTeam == "Team2":
+            message = '{"action": "starArrayTeam2", "data": ' + json.dumps(self.starArrayTeam2) + '}'
+            message = message.encode('utf-8')
+            self.s.sendto(message, (self.gegnerHost, self.gegnerPort))
 
 
     def starAttack(self, starDef, starAt):
