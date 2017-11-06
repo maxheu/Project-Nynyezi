@@ -679,6 +679,7 @@ class Nynyezi:
 #         if timer['name'] == 'Crisis_Dark_Matter':
 #             timer['time'] = 40
 # """, "ongoingeffect": "perpetual"}]
+"""
         self.Events = [{"name": "ersteEntwicklung", "Header": "Die erste Entwicklung", "text": "Einer eurer Sterne hat lange genug gelebt um in eine neue Lebensphase überzugehen. Alle eure Sterne entwicklen sich mit der Zeit und durchlaufen verschiedene Stadien.", "state": False, "buttons": [{"name": "OK", "effect": " ", "bedingung": "True", "hovertext": None}]}, {"name": "RieseErforschen", "Header": "Die Geheimnisse des Aldebaran", "text": "Aldebaran ist wahrlich ein Riese mit Herz und Seele. Er ist 45 mal größer als die Sonne und leuchtet gigantische 150 mal so hell wie sie. Er verbrennt in seiner aufgeblähten Schale stoffe viel weiter als nur bis zum Helium und nutz viel mehr von seinem Brennstoffvorrat.", "state": False, "buttons": [{"name": "Später", "effect": " ", "bedingung": "True", "hovertext": None}, {"name": "Startet die Erforschung", "effect": "self.RieseErforschenStart()", "bedingung": "(self.metalleTeam1>500 and self.strahlungTeam1>=2000000 and self.yourTeam == 'Team1') or (self.metalleTeam2>500 and self.strahlungTeam2>=2000000 and self.yourTeam == 'Team2')", "hovertext": "Die Erforschung wird in einiger Zeit abgeschlossen sein. Kostet 2 Mio. Strahlung und 500 Metalle."}]}, {"name": "SchwarzeslochErforschen", "Header": "Die Macht des Saggitarius A*", "text": "In der Mitte der Galaxis trohnt Saggitarius A*. Mit ihrer tatsächlichen Masse von etwa 4 Mio Sonnenmassen ist sie gigantisch und kaum vorstellbar. Schon lange wollen wir seine Macht entschlüsseln. Nach so langer Zeit könnten wir dieses Ziel endlich erreichen.", "state": False, "buttons": [{"name": "Später", "effect": " ", "bedingung": "True", "hovertext": None}, {"name": "Startet die Erforschung", "effect": "self.SchwarzeslochErforschenStart()", "bedingung": "(self.metalleTeam1>500 and self.strahlungTeam1>=2000000 and self.yourTeam == 'Team1') or (self.metalleTeam2>500 and self.strahlungTeam2>=2000000 and self.yourTeam == 'Team2')", "hovertext": "Die Erforschung wird in weniger Zeit abgeschlossen sein. Kostet 2 Mio. Strahlung und 500 Metall"}]}, {"name": "NeutronsternErforschen", "Header": "Die Erfahrung des Scorpio X-1", "text": "Der Neutronenstern Scorpio X-1 ist ein gigant seiner eigenen Klasse. Er ist eine der stärksten Röntgenquellen in unserer Galaxis, unglaublich dicht und sehr mächtig. Dieses Stadium wollen wir schon lange für unsere eigenen Sterne erreichen.", "state": False, "buttons": [{"name": "Später", "effect": " ", "bedingung": "True", "hovertext": None}, {"name": "Startet die Erforschung", "effect": "self.NeutronsternErforschenStart()", "bedingung": "(self.metalleTeam1>500 and self.strahlungTeam1>=2000000 and self.yourTeam == 'Team1') or (self.metalleTeam2>500 and self.strahlungTeam2>=2000000 and self.yourTeam == 'Team2')", "hovertext": "Die Erforschung wird in weniger Zeit abgeschlossen sein. Kostet 2 Mio. Strahlung und 500 Metall."}]}, {"name": "RieseErforscht", "Header": "Geheimnisse Gelueftet", "text": "Du hast einen Riesen erforscht und dadurch die Entwicklungsstufe Riese freigeschaltet! Riesen sind Sterne, deren Radius zwischen 10 und 100 Sonnenradien beträgt. Aufgrund ihrer Größe emittieren Riesen sehr viel Strahlung und produzieren beim Übergang ins Zwergenstadium viele Metalle.", "state": False, "buttons": [{"name": "Ein Großer Schritt", "effect":
 """
 if self.yourTeam=='Team1':
@@ -704,7 +705,7 @@ else:
 """,
         "bedingung": "True", "hovertext": "Wir haben nun Zugriff auf Neutronsterne."}]},
         {"name": "chooseCat", "Header": "Wichtige Entscheidungen...", "text": "str(star['name']) hat seine Lebensphase beendet. Es liegt an euch, zu entscheiden, wie er sich jetzt weiterentwickeln soll.", "state": False, "buttons": [{"name": "Er soll ein Neutronenstern werden!", "effect":
-"""
+
 star['cat']='Neutronenstern'
 star['nextLevel'] = 1/(star['mass']+1)**0.5*60/0.1
 self.ersterNeutronenstern = True
@@ -726,30 +727,31 @@ else:
         self.metalleTeam2 += 400*(star["mass"]-2.3)/0.7+200
     elif star["mass"] > 3:
         self.metalleTeam2 += 400*(star["mass"]-3)/17+600
-""", "bedingung": "(self.yourTeam=='Team1' and self.techArrayTeam1['Weisheit'][6] == True) or (self.yourTeam=='Team2' and self.techArrayTeam2['Weisheit'][6] == True)", "hovertext": "star['name'] wird zum Neutronenstern."}, {"name": "Er soll ein Schwarzes Loch werden!", "effect":
-"""
-star['cat']='Schwarzes Loch'
-star['nextLevel'] = 1/(star['mass']+1)**0.5*60/0.1
-self.erstesSchwarzesLoch = star
-if self.yourTeam == 'Team1':
-    if self.techArrayTeam1['Weisheit'][2]:
-        mod = 1.1
+""", "bedingung": "(self.yourTeam=='Team1' and self.techArrayTeam1['Weisheit'][6] == True) or (self.yourTeam=='Team2' and self.techArrayTeam2['Weisheit'][6] == True)", "hovertext": "star['name'] wird zum Neutronenstern."}, {"name": "Er soll ein Schwarzes Loch werden!",
+"effect": """
+    star['cat']='Schwarzes Loch'
+    star['nextLevel'] = 1/(star['mass']+1)**0.5*60/0.1
+    self.erstesSchwarzesLoch = star
+    if self.yourTeam == 'Team1':
+        if self.techArrayTeam1['Weisheit'][2]:
+            mod = 1.1
+        else:
+            mod = 1
+        if star["mass"] <= 2.3 and star["mass"] < 3:
+            self.metalleTeam1 += 400 * mod *(star["mass"]-2.3)/0.7+200
+        elif star["mass"] > 3:
+            self.metalleTeam1 += 400 * mod * (star["mass"]-3)/17+600
     else:
-        mod = 1
-    if star["mass"] <= 2.3 and star["mass"] < 3:
-        self.metalleTeam1 += 400 * mod *(star["mass"]-2.3)/0.7+200
-    elif star["mass"] > 3:
-        self.metalleTeam1 += 400 * mod * (star["mass"]-3)/17+600
-else:
-    if self.techArrayTeam2['Weisheit'][2]:
-        mod = 1.1
-    else:
-        mod = 1
-    if star["mass"] <= 2.3 and star["mass"] < 3:
-        self.metalleTeam2 += 400*(star["mass"]-2.3)/0.7+200
-    elif star["mass"] > 3:
-        self.metalleTeam2 += 400*(star["mass"]-3)/17+600
-""", "bedingung": "(self.yourTeam=='Team1' and self.techArrayTeam1['Kraft'][6]) or (self.yourTeam == 'Team2' and self.techArrayTeam2['Kraft'][6])", "hovertext": "str(star['name']) wird zum Schwarzen Loch."}]},
+        if self.techArrayTeam2['Weisheit'][2]:
+            mod = 1.1
+        else:
+            mod = 1
+        if star["mass"] <= 2.3 and star["mass"] < 3:
+            self.metalleTeam2 += 400*(star["mass"]-2.3)/0.7+200
+        elif star["mass"] > 3:
+            self.metalleTeam2 += 400*(star["mass"]-3)/17+600
+    """,
+"bedingung": "(self.yourTeam=='Team1' and self.techArrayTeam1['Kraft'][6]) or (self.yourTeam == 'Team2' and self.techArrayTeam2['Kraft'][6])", "hovertext": "str(star['name']) wird zum Schwarzen Loch."}]},
 {"name": "sternhaufen", "Header": "Sternhaufen", "text": "Ihr habt 10 neue Sterne entstehen lassen. Dadurch habt ihr euren Einfluss in der Galaxis weithin ausgedehnt. Aber mit großer Macht kommt...", "state": False, "buttons": [{"name": "...große Weisheit", "effect": "self.techcostmod = 0.95", "bedingung": "True", "hovertext": "Verringert die Kosten für Technologien um 5% bis zum Ende des Spiels."}, {"name": "...kommt große Effizienz.", "effect": "self.starcostmod = 0.9", "bedingung": "True", "hovertext": "Verringert die Kosten für neue Sterne um str(10%) für das restliche Spiel."}, {"name": "...kommt große Verantwortung.", "effect": "self.attackmod = self.attackmod * 1.1", "bedingung": "True", "hovertext": "...erhöht den Schaden, den eure Sterne verursachen um str(10%) für den Rest des Spiels. Mit Vorsicht benutzen!"}]},
 {"name": "gameoverlost", "Header": "Interstellare Macht", "text": "Dein Gegner hat ein stärkeres Imperium aufgebaut und sich die Vorherrschaft in diesem Cluster gesichert.", "state": False, "buttons": [{"name": "Wir werden unsere Revance haben!", "effect":
 """
@@ -808,15 +810,15 @@ else:
                                 "Weisheit": [False, False, False, False, False, False, False, False],
                                 "Perfektion": [False, False, False, False, False, False, False, False]}
 
-        #self.strahlungTeam1 = 0
-        #self.metalleTeam1 = 0
-        #self.strahlungTeam2  = 0
-        #self.metalleTeam2 = 0
+        self.strahlungTeam1 = 0
+        self.metalleTeam1 = 0
+        self.strahlungTeam2  = 0
+        self.metalleTeam2 = 0
 
-        self.strahlungTeam1 = 1000000000
-        self.metalleTeam1 = 1200000
-        self.strahlungTeam2 = 10000000000
-        self.metalleTeam2 = 10000000
+        #self.strahlungTeam1 = 1000000000
+        #self.metalleTeam1 = 1200000
+        #self.strahlungTeam2 = 10000000000
+        #self.metalleTeam2 = 10000000
 
         #eventflags und mods
         self.techcostmod = 1.0
@@ -2647,7 +2649,7 @@ else:
                             timepenaltyDef = (5-timemod)/5
 
                         DeinSchaden = DeinSchaden * modDef * attackDef * defenseAt * 3**(-distance*rangeDef/display_x) * timepenaltyDef * (1/FPS) * 0.1
-                        
+
                         if Gegner["team"] == "Team3" or Gegner["team"] == "Team4":
                             if Gegner['cat'] == 'Geburt':
                                 modAt = 1
